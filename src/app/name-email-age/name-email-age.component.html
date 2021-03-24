@@ -1,0 +1,500 @@
+
+<!-- ///////////////////////creating new form by passing  object containing whole info////////////// -->
+<!-- ////////////////////////////INPUT FIELD/////////////////////////////////////// -->
+<div [formGroup]="reusableComponentform">
+  <div *ngIf="inputFieldFlag">
+    <div [class]="applyMyCustmClasses">
+    <div *ngFor="let inputData of myObj.inputfield.fields;let i=index">
+      <label class="text-dark"  for="exampleInput">{{inputData.label | uppercase}}</label>
+      <input [type]="myObj.inputfield.fields[i].type" class="form-control " placeholder="{{inputData.placeholder}}"
+       [id]="inputData.label" [formControlName]="inputData.formControlName" [required]="myObj.inputfield.fields[i].validation.required">
+      
+       <!--Validation messages required, minlength, maxlength, email  -->  
+       <!-- <div *ngIf="myObj.inputfield.fields[i].validation.required==false">{{addValidation(inputData.label,myObj.inputfield.fields[i].validation)}}</div>  -->
+        <!-- <div *ngIf="myObj!=myObjDummy">{{addValidation(inputData.label,myObj.inputfield.fields[i].validation)}}</div> -->
+        <div *ngIf="myObj.inputfield.fields[i].validation.required"><span class="text-danger" *ngIf="reusableComponentform.get(inputData.formControlName).touched && 
+                     reusableComponentform.get(inputData.formControlName).hasError('required')">{{inputData.label|uppercase}} is required</span>
+         </div>         
+         <div *ngIf="(myObj.inputfield.fields[i].validation.maxLength)"><span class="text-danger" *ngIf="reusableComponentform.get(inputData.formControlName).touched && 
+          reusableComponentform.get(inputData.formControlName).hasError('maxlength')">{{inputData.label|uppercase}} maximum length must be {{inputData.validation.maxLength}}</span>
+         </div>
+         <div *ngIf="(myObj.inputfield.fields[i].validation.required && myObj.inputfield.fields[i].validation.minLength)"><span class="text-danger" *ngIf="reusableComponentform.get(inputData.formControlName).touched &&
+           reusableComponentform.get(inputData.formControlName).hasError('minlength')">{{inputData.label|uppercase}} minimum length must be {{inputData.validation.minLength}}</span>
+         </div>
+         <div *ngIf="myObj.inputfield.fields[i].validation.emailVal"><span class="text-danger" *ngIf="reusableComponentform.get(inputData.formControlName).touched && 
+          reusableComponentform.get(inputData.formControlName).hasError('email')">Write valid email addresss</span>
+        </div> 
+        
+ 
+      </div>  
+    </div> 
+</div>
+<!-- ==========================INPUTFIELD ended==================================================================== -->
+
+<!-- /=============================== SELECTLIST ================================ -->
+<div *ngIf="selectListFlag" class="form-group">
+    <select  class="form-select" 
+            aria-label="Default select example" formControlName="selectlist" [required]="myObj.selectlist.validation.required">
+      <option [ngValue]="null" selected>Select {{myObj.selectlist.listHeading}}</option>
+      <option *ngFor="let subject of myObj.selectlist.selectlistArray; let i=index; " [value]="subject.id">{{subject.name}}</option>
+    </select>
+      <div class="myWarningRed">
+         <span *ngIf="(myObj.selectlist.validation.required && reusableComponentform.get('selectlist').touched && 
+                      reusableComponentform.get('selectlist').hasError('required'))">
+           Please select one of {{myObj.selectlist.listHeading}}
+        </span>
+      </div>
+  </div>
+<!-- =============================SELECT LIST ENDS============================================================================ -->
+
+
+<!-- //////////////////////////CHECKBOX ///////////////////////////////////////////////// -->
+<div *ngIf="checkboxFlag" class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="checkbox" 
+    [required]="myObj.checkbox.validation.required">
+    
+    <label  class="form-check-label" for="exampleCheck1">{{myObj.checkbox.heading}}</label>
+    
+    <div>
+      <span class="myWarningRed" *ngIf="myObj.checkbox.validation.required && reusableComponentform.get('checkbox').touched &&
+      reusableComponentform.get('checkbox').hasError('required')">{{myObj.checkbox.errorMSG}}</span>
+    </div>
+ </div>    
+
+<!-- ============================checkbox ended============================================================================== -->
+
+
+
+<!-- //////////////ckeditor///////////////////////////////// -->
+<div  *ngIf="CKEditorFlag">
+  <ckeditor class="myEditor" [editor]="Editor" [config]="ckconfig" formControlName="ckeditor" required></ckeditor>
+  <span class="text-danger" *ngIf="reusableComponentform.get('ckeditor').touched &&
+  reusableComponentform.get('ckeditor').hasError('required')">Please fill data in editor</span>
+  <span class="text-danger" *ngIf="reusableComponentform.get('ckeditor').touched &&                          
+                          reusableComponentform.get('ckeditor').hasError('maxlength')">words must be between 25 to 100</span>
+</div>
+
+<!-- =====================================ckeditor ends here======================================== -->
+<!-- =====================================dropDown================================================= -->
+
+<div *ngIf="dropdownFlag" class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   {{myObj.dropdown.heading}}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a *ngFor="let data of myObj.dropdown.items"  class="dropdown-item" [routerLink]="data.dropDownRoutLinks">{{data.item}}</a>   
+  </div>
+</div>
+<!-- =====================================dropDown ends================================================= -->
+
+
+<!-- ===================================TEXT AREA=========================================== -->
+
+<div *ngIf="textAreaFlag" class="form-group">
+  <label for="exampleFormControlTextarea1">{{myObj.textarea.heading}}</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="textarea"
+   [required]="myObj.textarea.validation.required">
+  </textarea>
+   <div *ngIf="myObj.textarea.validation.required">
+    <span class="text-danger" *ngIf=" reusableComponentform.get('textarea').touched &&
+        reusableComponentform.get('textarea').hasError('required')">{{myObj.textarea.errorMSG}}</span>
+    </div>
+</div>
+<!-- <div *ngIf="textAreaFlag" class="form-group">
+  <label for="exampleFormControlTextarea1">{{myObj.textarea.textAreaHeading}}</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="textarea"></textarea>
+</div> -->
+<!-- ===================================TEXT AREA ENDS========================================== -->
+
+<!-- ===========================================RADIO BUTTONS=================================== -->
+<div *ngIf="radioButtonFlag">
+  <h3 class="text-primary">Please select your {{myObj.radioButton.name}}</h3>
+  <div *ngFor="let option of myObj.radioButton.options" class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" [name]="myObj.radioButton.name" [id]="myObj.radioButton.name" [value]="option"
+     [formControlName]="myObj.radioButton.name" [required]="myObj.radioButton.validation.required">
+    <label class="form-check-label" for="inlineRadio1">{{option}}</label>
+  </div>
+  <div *ngIf="myObj.radioButton.validation.required">
+    <span class="text-danger" *ngIf=" reusableComponentform.get(myObj.radioButton.name).touched &&
+        reusableComponentform.get(myObj.radioButton.name).hasError('required')">{{myObj.radioButton.errorMSG}}</span>
+    </div>
+</div>
+<!-- ===========================================RADIO BUTTON ENDS=================================== -->
+
+<!-- ===========================================MULTIPLE CHECKBOXES=================================== -->
+ 
+<div  *ngIf="multipleCheckboxFlag" class="form-group form-check">
+  <h3>{{myObj.multipleCheckbox.heading}}</h3>
+ <div formArrayName="arrMultiCheckbox" >
+  <div *ngFor="let checkboxItem of myObj.multipleCheckbox.items;let i=index">
+    <input type="checkbox" class="form-check-input" formControlname="{{i}}" value="{{checkboxItem}}"
+     (change)="multipleCheckbox($event)" >    
+    <label class="form-check-label text-primary" for="{{checkboxItem}}">{{checkboxItem|uppercase}}</label>
+  </div>
+  <div class="myWarningRed">
+    <span *ngIf="(selectMultipleCheckboxes.length<1) && selectMultipleCheckboxesTouch && myObj.multipleCheckbox.validation.required">
+      {{myObj.multipleCheckbox.errorMSG}}
+   </span>
+ </div>
+ </div>
+</div>   
+
+
+<!-- =====================================MULTIPLE CHECKBOXES  ends=================================== -->
+<!-- ==============================TABLE 2 ENDS========================================== -->
+<div *ngIf="table2Flag">
+  <table class="table table-bordered">
+  <thead>
+    <tr>
+      <!-- <th scope="col">RowItems</th> -->
+      <ng-container formArrayName="table2Col">
+      <th scope="col" *ngFor="let item of reusableComponentform.controls.table2Col.controls;let i=index" [formGroupName]="i">
+        <input type="text" formControlName="column"><button (click)="deleteTable2ColumnOnClick()">X</button></th>
+     </ng-container>
+      <th scope="col"><button class="btn btn-danger" (click)="addTable2ColumnOnClick()">AddCol</button> </th>
+      <!-- <th scope="col">Last</th>
+      <th scope="col">Handle</th> -->
+    </tr>
+  </thead>  
+  <tbody>
+    <tr>
+      <!-- <th scope="row">1</th> -->
+      <ng-container formArrayName="table2Row">
+        <td *ngFor="let item of reusableComponentform.controls.table2Row.controls;let i=index" [formGroupName]="i">
+          <input type="text" formControlName="row">
+        </td>
+       </ng-container>
+      <!-- <td>Mark</td>
+      <td>Mark</td>      
+      <td>Otto</td>
+      <td>@mdo</td> -->
+    </tr>
+    <tr> 
+       <td><button class="btn btn-danger" (click)="addTable2RowOnClick()">AddRow</button> </td>
+    </tr>
+    <!-- <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr> 
+   <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr> -->
+  </tbody>
+  </table>
+</div>
+
+
+<!-- ==============================TABLE 2 ENDS========================================== -->
+
+</div><!-- LAST div of FORM -->
+
+
+<!-- //////////////////////============TABLE==========//////////////////////////////////// -->
+
+<div *ngIf="tableFlag" >
+    <h3 class="text-primary">{{myObj.table.tableHeading}}</h3>
+  <table class="table table-hover  table-striped">
+    <thead>
+      <tr>             
+        <th *ngFor="let heading of myTableRowHeading" scope="col">{{heading |uppercase}}</th>     
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tableRow of myObj.table.list | paginate: {  id: 'paginationId',
+                                                                  itemsPerPage: 10,
+                                                                  currentPage: p,
+                                                                  totalItems: myObj.table.list.length }">
+         
+        <td *ngFor="let heading of myTableRowHeading">{{tableRow[heading]}}</td>
+       
+      </tr>   
+    </tbody>
+  </table>
+  <pagination-controls  id="paginationId"
+                      (pageChange)="pageChanged($event)"
+                      (pageBoundsCorrection)="pageChanged($event)"
+                      maxSize="9"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="Previous"
+                      nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination"
+                      screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+</pagination-controls>
+</div>
+<!-- ==============================TABLE ENDS========================================== -->
+
+
+
+
+
+
+<!-- =====================================drop and down starts========================================= -->
+<!-- <p>The default dropzone.</p>
+
+<ngx-dropzone (change)="onSelect($event)">
+	<ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+	<ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+		<ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+	</ngx-dropzone-preview>
+</ngx-dropzone>
+
+<p>The disabled but expanding dropzone.</p>
+
+<ngx-dropzone (change)="onSelect($event)" [disabled]="true" [expandable]="true">
+	<ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+	<ngx-dropzone-preview *ngFor="let f of files">
+		<ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+	</ngx-dropzone-preview>
+</ngx-dropzone> -->
+<div *ngIf="dragAndDropFlag">
+<p>A custom dropzone.</p>
+
+<div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+	<ngx-dropzone-label>
+		<div>
+			<h2>Click to add Images</h2>
+		</div>
+	</ngx-dropzone-label>
+  <div>
+	  <ngx-dropzone-image-preview  ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files;let i=index"
+        [file]="f" [removable]="true" (removed)="onRemove(f)">
+		    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+   	</ngx-dropzone-image-preview>
+  </div>
+</div>
+  <h4 class="text-success">Total count:{{files.length}}</h4>
+  <h4 class="text-danger" *ngIf="((files.length>5)||(files.length<3)) && fileErr">more than {{maxImageLimit}} images and less than {{minImageLimit}} images are not allowed to upload.</h4>
+<div>
+  <button type="upload" class="btn btn-danger" (click)="uploadImage()">Upload</button>
+</div>
+</div>
+<!-- =====================================drop and down ends here========================================= --> 
+
+<!-- =====================================CARDS========================================= -->
+
+
+<div *ngIf="cardFlag" class="card" style="width: 18rem;">
+  <img src={{myObj.card.image}} class="card-img-top" alt="somthing went wrong">
+  <div class="card-body">
+    <h5 class="card-title">{{myObj.card.title}}</h5>
+    <p class="card-text">{{myObj.card.description}}</p>
+    <a href="#" class="btn btn-primary">go</a>
+  </div>
+</div>
+
+
+<!-- =====================================CARDS ENDS ========================================= -->
+
+
+  
+<!-- =====================================CARDS with slider/corousel effect========================================= -->
+<div *ngIf="cardWithSliderFlag" class="card" style="width: 18rem;">
+  <!-- ////////////////////adding corousel effect in cards//////////////// -->
+  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner"style="height: 200px;">
+        <div class="carousel-item active" data-interval="2000">
+            <img src={{myObj.cardWithSlider.images.image1}} class="d-block w-100 " alt="...">
+        </div>
+        <div class="carousel-item" data-interval="2000">
+          <img src={{myObj.cardWithSlider.images.image2}} class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src={{myObj.cardWithSlider.images.image3}} class="d-block w-100" alt="...">
+        </div>
+      </div>
+    </div>
+      <!-- ////////////////////adding corousel effect in card ends/////////////// -->
+  <div class="card-body">
+    <h5 class="card-title">{{myObj.cardWithSlider.title}}</h5>
+    <p class="card-text">{{myObj.cardWithSlider.descriptiom}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+<!-- =====================================CARDS with slider/corousel effect ENDS ========================================= -->
+
+<!-- ================================SLIDING CARDS============================ -->
+<div *ngIf="slidingCardsFlag" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <h3>Welcome to corosel</h3>
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">   
+    <!-- <div [class]="card.isActive" [data-interval]="card.dataInterval"> -->
+    <div *ngFor="let card of myObj.slidingCards" [class]="card.isActive" [data-interval]="card.dataInterval">
+      <!-- adding card -->
+      <div class="card" style="width: 18rem;">
+        <img src={{card.image}} class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{card.title}}</h5>
+          <p class="card-text">{{card.descriptiom}}</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>   
+    <!-- adding card ends -->
+  </div>
+ 
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<!-- ================================SLIDING CARDS ENDS=========================== -->
+
+<!-- ============================OWL CAROUSEL with images  ========================================== -->
+<div *ngIf="owlCarouselImgFlag">
+  <h3>This is Owl carousel (images)example</h3>
+ <owl-carousel-o [options]="customOptionsImages">
+
+  <ng-container *ngFor="let slide of myObj.owlCarouselImg">
+    <ng-template carouselSlide [id]="slide.id">
+      <img [src]="slide.image" [alt]="slide.alt" [title]="slide.title">
+    </ng-template>
+  </ng-container>
+
+ </owl-carousel-o>
+</div>
+<!-- static carousel -->
+<!-- <div *ngIf="owlCarouselFlag">
+  <h3>Owl carousel example</h3>
+<owl-carousel-o [options]="customOptions">
+  <ng-template carouselSlide>
+    <img src="../../assets/images/plate-1.png"  alt="...">
+  </ng-template>  
+  <ng-template carouselSlide>
+    <img src="../../assets/images/plate-2.png"  alt="...">
+
+  </ng-template>  
+  <ng-template carouselSlide>
+    <img src="../../assets/images/plate-3.png" alt="...">
+
+  </ng-template>  
+  <ng-template carouselSlide>
+    <img src="../../assets/images/plate-1.png"  alt="...">
+
+  </ng-template>  
+  <ng-template carouselSlide>
+    <img src="../../assets/images/plate-3.png"  alt="...">
+
+  </ng-template>  
+</owl-carousel-o>
+</div> -->
+<!-- static carousel ends -->
+
+<!-- ============================OWL CAROUSEL ENDS========================================== -->
+<!-- ============================OWL CAROUSEL WITH CARDS(containing image and text)========================================== -->
+<div *ngIf="owlCarouselCardsFlag">
+  <h3>This is Owl carousel (cards)example</h3>
+ <owl-carousel-o [options]="customOptionsCards">
+
+  <ng-container *ngFor="let slide of myObj.owlCarouselCards">
+    <ng-template carouselSlide [id]="slide.id">
+      <!-- <img [src]="slide.image" [alt]="slide.alt" [title]="slide.title"> -->
+      <!-- card code starts -->
+      <div class="card" style="width: 18rem; height:350px;">
+        <img [src]="slide.image" class="card-img-top" alt="slide.alt">
+        <div class="card-body">
+          <p class="card-text">Today's special item {{slide.title}}</p>
+        </div>
+      </div>
+
+      <!-- card code ends -->
+    </ng-template>
+  </ng-container>
+
+ </owl-carousel-o>
+</div>
+<!-- ============================OWL CAROUSEL WITH CARDS ENDS========================================== -->
+
+<!-- ============================AUTO COMPLETE========================================== -->
+<div *ngIf="autoCompleteFlag" class="ng-autocomplete">
+  <h3>Hello welcome to auto complete example</h3>
+  <ng-autocomplete 
+    [data]="myObj.autoComplete.data"
+    [searchKeyword]="keyword"
+    [placeholder]="myObj.autoComplete.placeholder"
+    historyIdentifier="data"
+    historyListMaxNumber="3"
+    (selected)='selectEvent($event)'
+    (inputChanged)='onChangeSearch($event)'
+    (inputFocused)='onFocused($event)'
+    [itemTemplate]="itemTemplate"
+    [notFoundTemplate]="notFoundTemplate">                                 
+  </ng-autocomplete>
+  
+  <ng-template #itemTemplate let-item>
+  <a [innerHTML]="item.name"></a>
+  </ng-template>
+  
+  <ng-template #notFoundTemplate let-notFound>
+  <div [innerHTML]="notFound"></div>
+  </ng-template>
+  </div>
+<!-- ============================AUTO COMPLETE ENDS========================================== -->
+
+<!-- ================================DARG AND DROP IMAGE ======================================= -->
+<!-- <div *ngIf="dragAndDropBoxFlag" class="example-box" cdkDrag>
+  Drag me around
+</div> -->
+
+<!-- ================================DARG AND DROP IMAGE ENDS======================================= -->
+
+<!-- ================================TRANSFERING ITEMS BETWEEN LIST======================================= -->
+<div *ngIf="tranItemsBetListFlag">
+  <div class="example-container">
+    <h2>To do</h2>
+
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="myObj.tranItemsBetList.todo"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box-transf-item-list" *ngFor="let item of myObj.tranItemsBetList.todo" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  <!-- [cdkDropListData]="myObj.tranItemsBetList.todo"  dynamically sending data-->
+  <div class="example-container">
+    <h2>Done</h2>
+
+    <div
+      cdkDropList
+      #doneList="cdkDropList"      
+      [cdkDropListData]="myObj.tranItemsBetList.done"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box-transf-item-list" *ngFor="let item of myObj.tranItemsBetList.done" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+</div>
+<!-- [cdkDropListData]="myObj.tranItemsBetList.done" dynamically sending data -->
+<!-- ================================Transferring items between lists ENDS======================================= -->
+<!-- ========================================================================================================== -->
+<!-- ================================TRANSFERING MULTI ITEMS BETWEEN THE LISTS ======================================= -->
+
+
+
+
+<!-- ================================TRANSFERING MULTI ITEMS BETWEEN THE LISTS ENDS======================================= -->

@@ -1,0 +1,113 @@
+<h2 class="text-success">Welcome to student project section</h2>
+
+ <form [formGroup]="shareCompDemo" class="bg-light">       
+ 
+ <div class="myContainerRed">
+    <app-name-email-age [myObj]="myObj1" formControlName="inputForm"></app-name-email-age>
+</div>
+
+<div class="myContainerBlue">
+    <app-name-email-age [myObj]="myObj2" formControlName="selectList"></app-name-email-age>
+</div>
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj3" formControlName="emailField"></app-name-email-age>
+</div>
+
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj4" formControlName="checkbox"></app-name-email-age>
+</div>
+ 
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj5"></app-name-email-age>
+</div>
+<div class="">
+    <app-name-email-age [myObj]="myObj6" formControlName="ckeEditor"></app-name-email-age>
+</div>
+
+<!-- Below one is about dropdowns  -->
+
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj7"></app-name-email-age>
+</div>
+<div class="myContainerRed">
+    <app-name-email-age [myObj]="myObj8" formControlName="textarea"></app-name-email-age>
+</div>
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj9" formControlName="radiobuttons"></app-name-email-age>
+</div>
+<div class="myContainerBlue">
+    <app-name-email-age [myObj]="myObj10" formControlName="multipleCheckBox"></app-name-email-age>
+</div>
+
+<!-- =====Below one is about TABLE  with pagination ===== -->
+<div class="myContainerGreen">
+    <app-name-email-age [myObj]="myObj11"></app-name-email-age>
+</div>
+
+<!-- =======Below one is about  simple card=========  -->
+<!-- <div>
+    <app-name-email-age [myObj]="myObj12"></app-name-email-age>
+</div> -->
+
+<!--=== Below one is about  sliding effects inside cards==== -->
+<!-- <div>
+    <app-name-email-age [myObj]="myObj13"></app-name-email-age>
+</div>  -->
+
+<!--==== Below one is about cards with sliding effects===== -->
+<!-- <div>
+    <app-name-email-age [myObj]="myObj14"></app-name-email-age>
+</div> -->
+<!-- ================ ==IMAGE OWL CAROUSEL============= -->
+ <!-- <div>
+    <app-name-email-age [myObj]="myObj15"></app-name-email-age>
+</div> -->
+<!-- =====================CARD OWL CAROUSEL================== -->
+<!-- <div>
+    <app-name-email-age [myObj]="myObj16"></app-name-email-age>
+</div>  -->
+<!-- ==================AUTOCOMPLETE========== -->
+<!-- <div>
+    <app-name-email-age [myObj]="myObj17"></app-name-email-age>
+</div> -->
+
+<div>
+    <app-name-email-age [myObj]="myObj19"></app-name-email-age>
+</div>
+
+<div class="">
+    <app-name-email-age [myObj]="myObjFullName" formControlName="fullName"></app-name-email-age>       
+    
+</div>
+
+
+<button type="submit" class="btn btn-primary" (click)="displayForm()"[disabled]="!shareCompDemo.valid">Submit</button>
+</form>
+
+
+{{shareCompDemo.value |json}}
+
+
+  
+
+<!-- //////////cards//////////////////// -->
+
+
+
+<!-- //////////cards//////////////////// -->
+
+
+
+<!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-interval="1000">
+          <img src="../../../assets/images/vegies.png" class="d-block w-100 " alt="...">
+      </div>
+      <div class="carousel-item" data-interval="4000">
+        <img src="../../../assets/images/pexels-zukiman-mohamad-21787.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="../../../assets/images/salad-table.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div> -->

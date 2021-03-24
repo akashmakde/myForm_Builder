@@ -1,0 +1,16 @@
+{
+  "students": [
+    {
+      "allInOne2": {
+        "surname": "akash",
+        "firstname": "makde",
+        "lastname": "avinash",
+        "email": "akashh@gmail.com"
+      },
+      "checkbox": {
+        "checkbox": true
+      },
+      "id": 2
+    }
+  ]
+}

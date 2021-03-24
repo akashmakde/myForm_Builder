@@ -1,0 +1,28 @@
+
+<h4>
+  Clicking on items toggles their selection, single arrow buttons move the selected items, double-arrows move all items
+</h4>
+<div class="container">
+  <ul>
+    MOVIES
+    <li 
+      *ngFor="let item of list1" 
+      [class.item-selected]="item.selected"
+      (click)="toggleSelection(item, 1)"      
+      >{{item.movies}}</li> 
+  </ul>
+  <div class="buttons-container">
+    <!-- <i class="bi bi-arrow-right-short" (click)="moveSelected('right')"></i> -->
+  <button type="button" class="btn btn-success" (click)="moveSelected('right')">RIGHT</button>
+  <button type="button" class="btn btn-success" (click)="moveAll('right')">Move all Right</button>
+  <button type="button" class="btn btn-success"(click)="moveSelected('left')">Left</button>
+  <button type="button" class="btn btn-success" (click)="moveAll('left')">Move all Left</button>
+  </div>
+  <ul>
+    MOVIES WATCHED
+    <li 
+      *ngFor="let item of list2" 
+      [class.item-selected]="item.selected"
+      (click)="toggleSelection(item, 2)">{{item.movies}}</li>
+  </ul>
+</div>

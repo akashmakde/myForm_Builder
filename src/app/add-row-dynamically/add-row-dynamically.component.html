@@ -1,0 +1,27 @@
+<form [formGroup]="addRowsDynamically">
+    <div class="form-group">
+        <label for="">student Info</label>
+        <div class="row">
+            <div class="col-md-2">
+                <input type="text" placeholder="name" class="form-control" id="" formControlName="name" required>
+            </div>
+            <div class="col-md-2">
+                <input type="email" placeholder="email" class="form-control" id="" formControlName="email" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" placeholder="age" class="form-control" id="" formControlName="age" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" placeholder=" year" class="form-control" id="" formControlName="year" required>
+            </div>
+            <div class="col-md-2">
+                <button type="" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-secondary btn-lg">Add student</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

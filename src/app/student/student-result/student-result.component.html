@@ -1,0 +1,47 @@
+<h2 class="text-success">Welcome to student Result section</h2>
+
+ <form [formGroup]="shareCompDemo2">       
+<div class="myContainer">
+<app-name-email-age  [myObj]="myObjForm" formControlName="allInOne2"></app-name-email-age>
+</div>
+<div class="myContainer">
+    <app-name-email-age [myObj]="myObjCheckbox" formControlName="checkbox"></app-name-email-age>
+</div>
+
+<button type="submit" class="btn btn-primary" (click)="addStudent(shareCompDemo2.value)"[disabled]="!shareCompDemo2.valid">Submit</button>
+</form>
+
+{{shareCompDemo2.value |json}}
+
+
+
+<!-- -------------------------showing all form data----------------------------- -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">SURNAME</th>
+        <th scope="col">FIRSTNAME</th>
+        <th scope="col">LASTNAME</th>
+        <th scope="col">Email</th>
+        <th scope="col">checkbox</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+     
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of allUser">
+        <th scope="row">{{user.id}}</th>
+        <td>{{user.allInOne2.surname}}</td>
+        <td>{{user.allInOne2.firstname}}</td>
+        <td>{{user.allInOne2.lastname}}</td>
+        <td>{{user.allInOne2.email}}</td>       
+        <td>{{user.checkbox.checkbox}}</td>       
+        <td><button type="button" class="btn btn-warning"(click)="editUser(user)">Edit</button> </td>
+       <td><button type="button" class="btn btn-danger"(click)="deleteStudent(user)">Delete</button>  </td> 
+  
+      </tr>
+    
+    </tbody>
+  </table>

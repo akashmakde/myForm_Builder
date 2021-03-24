@@ -1,0 +1,390 @@
+Read me before using reusable component :
+This document is about ,how to reuse components:
+I have included following components:
+
+1)Input fields depending upon type it received.
+2)SelectList
+3)CheckBox
+4)CKEeditor
+5)DropDown
+6)TextArea
+7)Radio Button
+8)Multiple CheckBox
+9)Table with pagination
+10)Drag and Drop images
+11)single Card
+12)card with corousel effect
+
+
+=======================HOW TO SEND OBJECT TO USE COMPONENT====================
+////////////////////////(1)INPUT FIELD\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ myObj{
+    inputfield:   
+ 
+     {fields:[
+            {label:"firstname", type:"text",  validation:{required:true,maxLength:9},               },
+            {label:"lastname",  type:"text",   validation:{required:true,minLength:5,maxLength:10}, },
+            {label:"surname",   type:"text",   validation:{required:true},                          },
+            {label:"email",     type:"email",  validation:{required:true,emailVal:true},            } ,
+           ]
+    },
+    custmClasses:{class1:"backgroundColorBlack textAlignCenter timesNewRoman"},  
+ }
+
+ 1)In above Example, I want four input fields firstname, lastname, surname, and email.
+ 2)I declared one object myObj, and defined two keys in it 1)inputfield and 2)custmClasses
+   these keys are very important, because ,when reusable componenet received this object myObj,
+   it will search for these keys inputfield and custmClasses, to do next operation.
+3)Keys in object(myObj) are very important , I have explicitelly written them in an interface "myObjRec.ts" file , 
+  have a look over it.
+ About keys in nested json object "inputfield"
+    key "fields" as an array of field that are required
+         sub keys:
+                  1)label:this key will also be used as formControlName by reusableComponenet 
+                  2)type: type can be sent as email,text, number, etc.
+                  3)validation: this is another nested json object containing validation keys
+                        i)required: wheather input field is mandatory or  not (boolean type)
+                        ii)minLength: minimum number of character you want for inputfield (number type)
+                        iii)maxLength: maximum number of character you want for inputfield (number type)
+                        iv)emailVal: email validation(boolean type)
+                  4)Other validation can be added but you have change in interface file and template file of reusable component
+
+
+Now what to write in template file:
+ <div class="">
+    <app-name-email-age [myObj]="myObj1" formControlName="inputForm"></app-name-email-age>
+</div>
+you can write your own class and then app-selector with object to be sent ,and its formControlName
+////////////////////////(1)INPUT FIELD explaination ends\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                  
+    
+////////////////////// custmClasses///////////////////////////
+1)You can send custom classes to reusable component, that are already defined in reusableComponenet
+check them wheather they are defined/not before sending them.
+if not present ,then defined them in css file of reusableComponenet.
+//////////////////////////////////////////////////////////////////////////////////////////////// 
+
+///////////////////////(2)SELECTLIST///////////////////////////
+myObj2={
+    selectlist:
+            { listHeading:"your subjects",validation{required:true},
+              errorMSG:"Please select your subjects",      
+              selectlistArray :[
+                                  {id:'eng',    name:'English'    },
+                                  {id:'hindi',  name:'Hindi'      },                         
+                                  {id:'marathi',name:'Marathi'    },                         
+                                  {id:'maths',  name:'Mathematics'},                         
+                                  {id:'sci',    name:'Science'    },                         
+                                  {id:'geo',    name:'Geography'  },                         
+                                  {id:'cvs',    name:'Civics'     },                         
+                                  {id:'hist',   name:'History'    },                                                                      
+                                ],  
+            },
+  
+};
+I above example I am sending myObj2 as json object containing selectlist as nested json object
+keys in selectlist:
+                    1)listHeading:Your heading
+                    2)validation:
+                                required:true/false for required validation
+                    3)errorMSG:customise error message(not used but kept for future edit)
+                    4) selectlistArray: this is the data to be displayed in selectlist         
+
+Now what to write in template file:
+<div class="">
+    <app-name-email-age [myObj]="myObj2" formControlName="selectList"></app-name-email-age>
+</div>
+
+you can write your own class and then app-selector with object to be sent ,and its formControlName
+
+///////////////////////(2)SELECTLIST// ENDS/////////////////////////
+
+
+///////////////////////(3)CHECKBOX/////////////////////////
+//IN TS FILE
+myObj4={
+  checkbox:
+  { heading:"Agree to conditions",validation:{required:true},
+    errorMSG:"Please Agree to terms and conditions to proceed" },
+};
+////in template file
+<div class="">
+    <app-name-email-age [myObj]="myObj4" formControlName="checkbox"></app-name-email-age>
+</div>
+///////////////////////(3)CHECKBOX/// ENDS//////////////////////
+
+
+///////////////////////(3)DropDown//////////////////////
+myObj7={
+ dropdown:
+{heading:"My Dropdown heading",
+ items:[{item:"monday"},{item:"tuesday"}, {item:"wednesday"},{item:"thursday"}, {item:"friday"},  {item:"saturday"}   ],
+ dropDownRoutLinks:[{link:"/monday"},{link:"/tuesday"}, {link:"/wednesday"},{link:"/thursday"},{link:"/friday"},{link:"/saturday"}]
+}};
+here we are sending heading of dropdown
+items to be displayed and their dropdown RoutLinks
+
+////////////in template file///////////
+<div class="">
+    <app-name-email-age [myObj]="myObj7"></app-name-email-age>
+</div>
+
+
+///////////////////////(3)dropdown/// ENDS//////////////////////
+
+
+///////////////////////(4) DRAG AND DROP images///////////////
+myObj5={
+  dragAnddrop:{ },
+};
+dragAnddrop = this key  will help reusableComponenet to identify what is being asked for reuse
+<div class="">
+    <app-name-email-age [myObj]="myObj5"></app-name-email-age>
+</div>
+//////////////////////////////////////////////////
+
+//////////////////(5) CKE EDITOR(rich text editor)///////////////////
+myObj={
+  CKEditor:{},
+};
+CKEditor = this key  will help reusableComponenet to identify what is being asked for reuse
+//////////////////////(6)/ TEXT AREA////////////////////
+myObj8={
+ textarea:
+        {textAreaHeading:"My textArea"},
+};
+<div class="">
+    <app-name-email-age [myObj]="myObj8" formControlName="textarea"></app-name-email-age>
+</div>
+If you want textarea to have minLength or maxLength, then it must be given with formControlName and 
+validation must be set in reusable component file
+
+//////////////////////(6)/TEXT AREA ENDS///////////////////
+
+////////////////////Radio button///////////////////
+myObj9={
+  radioButton:
+    {radioButtonHeading:"Select your gender", validation:{required:true},
+     radioButtonValMSG:"Please select your gender",numberOfRadioButton:3,radiobuttonName:"gender",radioButtonHeadings:["Male","Female","Other"]
+    }
+  };
+  send heading, validation, validation message , number of radio buttons , radio button name and headings in array
+
+   How to write in template
+   <div class="">
+    <app-name-email-age [myObj]="myObj9" formControlName="radiobuttons"></app-name-email-age>
+   </div>
+   //////////////////////////////////////////////////////////////////////////
+
+   ////////////////// MULTIPLE CHECKBOXES//////////////////////
+  //in ts file 
+   myObj10={
+    multipleCheckbox:
+   {
+    heading:"Choose your Favourite fruits",
+    validation:{required:true},errorMSG:"Please select at least one option",
+    items:["oranges","banana","gauva","grapes","apple","mango"]
+   } 
+   };
+   // in template file
+   <div class="">
+    <app-name-email-age [myObj]="myObj10" formControlName="multipleCheckBox"></app-name-email-age>
+   </div>
+   ////////////////////////////////////////////////////////////////////
+////////////////////// Table with pagination///////////////////////////\
+ myObj11={
+  table:
+  {tableHeading:"Student enrolled List",
+  list:[
+                  {id:1,firstName:"Akash",  middleName:"Aviansh",lastName:"Makde"},                  
+                  {id:2,firstName:"Rahul",  middleName:"Aviansh",lastName:"Makde"},
+                  {id:3,firstName:"Sakash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:4,firstName:"natutp", middleName:"Aviansh",lastName:"Makde"},
+                  {id:5,firstName:"fxxxxf", middleName:"Aviansh",lastName:"Makde"},
+                  {id:6,firstName:"Avvvkash",middleName:"Aviansh",lastName:"Makde"},
+                  {id:7,firstName:"Akash",  middleName:"Aviansh",lastName:"Makde"},
+                  {id:8,firstName:"Akash",  middleName:"Aviansh",lastName:"Makde"},
+                  {id:9,firstName:"Akaxxxsh",middleName:"Aviansh",lastName:"Makde"},
+                  {id:10,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:11,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:12,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:13,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:14,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:15,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:16,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:17,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:18,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:19,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:20,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:21,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:22,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:23,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:24,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:25,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},
+                  {id:26,firstName:"Akash", middleName:"Aviansh",lastName:"Makde"},    
+                ]
+  }
+ }
+
+ In above example we are sending our json object with table as key  containing table heading and
+  array of objects as list.
+  In above list ,it contains id, firstName, midddlename,lastname but we can send any list containg any 
+  number of keys in it.
+This table contains pagination function.
+In template file just write:
+<div class="">
+    <app-name-email-age [myObj]="myObj11"></app-name-email-age>
+</div>
+
+=============================TABLE ENDS ========================================
+
+==============================Cards=====================================
+myObj12={
+  card:{
+    image:"../../../assets/images/1514540411738.jpg",
+    title:"hello",
+    description:"Welcome to our store"
+  }
+}
+Here in cards we are sending image,title and description
+Through template file just send it with 
+<div class="">
+    <app-name-email-age [myObj]="myObj11"></app-name-email-age>
+</div>  
+===========================card ends=================================
+======================OWL CAROUSEL WITH SLIDING IMAGES===============
+myObj15={
+  owlCarouselImg:[
+    {id:1,title:"Pasta",descriptiom:"World class manchurian",image:"../../assets/images/plate-1.png",alt:"image not found"},
+    {id:2,title:"Omlet",descriptiom:"World class omlet",image:"../../assets/images/plate-2.png",alt:"image not found"},
+    {id:3,title:"paneer",descriptiom:"World class paneer",image:"../../assets/images/plate-3.png",alt:"image not found"}, 
+    {id:4,title:"Pasta",descriptiom:"World class paneer",image:"../../assets/images/plate-1.png",alt:"image not found"}, 
+    {id:5,title:"Omlet",descriptiom:"World class paneer",image:"../../assets/images/plate-2.png",alt:"image not found"}, 
+    {id:6,title:"paneer",descriptiom:"World class paneer",image:"../../assets/images/plate-3.png",alt:"image not found"}, 
+  ]
+};
+FOR SLIDING IMAGE , we are sending  array of (id ,title, descriptiom and images)
+
+
+======================OWL CAROUSEL WITH SLIDING IMAGES ENDS===========
+======================OWL CAROUSEL WITH SLIDING cards ===========
+We are doing same above process for cards i.e. sending array of images etc.
+
+
+======================OWL CAROUSEL WITH SLIDING IMAGES ENDS===========
+
+=====================AUTO COMPLETE==========================
+
+
+myObj17={
+  autoComplete:{
+    data : [
+            {id: 1,name: 'Usa'},
+            {id: 2,name: 'England'},
+            {id: 3,name: 'India'},
+            {id: 4,name: 'pakistan'},
+            {id: 5,name: 'Bhutan'},
+            {id: 6,name: 'Bangladesh'},
+            {id: 7,name: 'Nepal'},
+            {id: 8,name: 'germany'},
+            {id: 9,name: 'france'},
+            {id: 10,name: 'italy'},
+            {id: 11,name: 'mexico'},
+            {id: 12,name: 'canada'},
+            {id: 13,name: 'china'},
+            {id: 14,name: 'japan'},
+            {id: 15,name: 'russia'},
+          ],
+   placeholder:"enter your country",
+ 
+}
+}
+
+
+HERE  we are sending data and placeholder
+=====================AUTO COMPLETE ENDS==========================
+
+This is the end of how to use reusable components that are created in single file
+===========EEEEEEEEEEEEE=====EEEEE=E=======EEEEE=======EEEEEEE=============================================================
+===========EEEEE=============EEEEE==E======EEEEE=======EEEE====EEE===================================================
+===========EEEEEEEEE=========EEEEE====E====EEEEE=======EEEE====EEEE======================================================
+===========EEEE==============EEEEE======E==EEEEE=======EEEE====EEE==================================================
+===========EEEEEEEEEEEEE=====EEEEE=======E=EEEEE=======EEEEEEEE=============================================================
+
+NOW NEXT IS , WHAT IS HAPPENING IN REUSABLE COMPONENT FILE,
+    First go Through "Building Reusable Forms in Angular" by "CORY RYLAN" article. and other articles
+    https://coryrylan.com/blog/building-reusable-forms-in-angular
+
+    After studing this and watching some videos about "control value accesssor", you will  get through-out 
+    knowledge of CVA.
+
+    For pagination table install pagination package 
+
+    For slider/carousel instal "owl carousel" 
+
+   Similearly I have install package for "auto complete"
+
+    In name-email-age component i.e. our reusable component
+    I have written code for each component mentioned in the starting
+
+    Most important part is 
+    @Input() myObj:myObjInterface=null;
+    This myObj receives data object sent by user.
+
+    I have set "flag" value of each component to false initilly to false.
+    This flag becomes true , when they are called by user
+    //setting flag variable to unlock template items ,,initially setting them to false
+
+    inputFieldFlag:boolean=false;
+    selectListFlag:boolean=false;
+    checkboxFlag:boolean=false;
+    CKEditorFlag:boolean=false;
+    dropdownFlag:boolean=false;
+    textAreaFlag:boolean=false;
+    radioButtonFlag:boolean=false;
+    multipleCheckboxFlag:boolean=false;
+    dragAndDropFlag:boolean=false;
+    tableFlag:boolean=false;
+    cardFlag:boolean=false;   
+    owlCarouselCardsFlag:boolean=false;
+    owlCarouselImgFlag:boolean=false;
+    autoCompleteFlag:boolean=false;
+    ///////////////////////////////////////////
+
+    //////////////constructor//////////////
+    constructor(private fb:FormBuilder) {
+      //creating inner blank form and dynmically adding form controls according to requirements
+      this.reusableComponentform=this.fb.group({   }); 
+    //////////////constructor//////////////
+
+    Main logic:
+    I have used ngOnChanges life cycle hook.
+          Watch kudvenkat angular videos on angular  component lifecycle hooks
+          
+    when this reusable component receives data through @Input decorator
+    check for  if(change.currentValue){ }
+    If it is true then check for   if(change.currentValue) current change in Input object through 
+    @Input decorator
+    if it true:
+    Then check for what type of object is being sent by user:
+
+    Object.keys(this.myObj).forEach((key:string)=>{  
+      //checking key in switch case and adding formcontrol  
+      switch(key){
+
+          case "inputfield":{//checking infutfields array
+            this.inputFieldFlag=true;//setting it true for template file 
+            for(let i=0; i<this.myObj.inputfield.fields.length; i++){//for loop for multiple input fields depending on lenght of that array
+             var inputFieldControlName=this.myObj.inputfield.fields[i].label;//name of formcontrol storing in  inputfield variable            
+             this.addFormControl(inputFieldControlName,this.myObj.inputfield.fields[i].validation);
+           }
+           break;
+          }
+          Here we are searching for all keys in myObj and matching it with the help of switch case
+           and if key is "inputfield" then we are setting
+          "inputFieldFlag" to true and then calling function addFormControl(), and sending formControlName 
+          and validation array i.e. required,minlength,maxlength ,email etc .
+          This function will generate formControl and set all validation as per user requirements .
+ After finding keys and matching them through switch case we are follwing same above steps.
+
+In some cases we are directly setting formControl and validation.

@@ -1,0 +1,138 @@
+input.ng-touched.ng-invalid{
+    border:1px solid red;
+}
+textarea.ng-touched.ng-invalid{
+    border:1px solid red;
+}
+.myWarningRed{
+    color: rgb(248, 109, 109);
+}
+.myWarningBrown{
+    color: rgb(110, 41, 41);
+}.myWarningGreen{
+    color: rgb(19, 117, 16);
+}
+.mySpanPass{
+    color: rgb(42, 165, 42);
+}
+.myEditor{
+    height: 400px;
+    width: 100% vw;
+}
+.myClass1{
+   // display: block;
+    margin: auto;
+  //  width: 30%;
+    border: 2px solid red;
+}
+.myContainer{
+    border: 2px solid green;
+   // margin-top: 10px;
+  //  margin-left: 110px;
+ // width: 600px;
+  background-color: rgb(192, 176, 184);
+  margin:auto;
+}
+
+.italicClass{
+    font-style: italic;
+}
+.colorRed{
+    color: red;
+}
+.boldClass{
+    font-weight: bold;
+}
+.borderBlackClass{
+    border: 2px solid black;
+}
+.timesNewRoman {
+    font-family: "Times New Roman", Times, serif;
+}  
+.arialFont{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.textAlignCenter{
+    text-align: center;
+}
+.textAlignRight{
+    text-align: right;
+}
+.textAlignLeft{
+    text-align: right;
+}
+.fontSize{
+    font-size: 5px;
+}
+.backgroundColorBlack{
+    background-color: black;
+}
+.backgroundColorGray{
+    background-color: gray;
+}
+
+
+:host ::ng-deep .ck-editor__editable_inline {
+    min-height: 250px;
+}
+  
+
+
+
+// ============================TRANSFERING ITEMS BETW LISTS=================================
+.example-container {
+    width: 400px;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .example-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+  }
+  
+  .example-box-transf-item-list {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+  }
+  
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-box:last-child {
+    border: none;
+  }
+  
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+// ============================TRANSFERING ITEMS BETW LISTS END=================================

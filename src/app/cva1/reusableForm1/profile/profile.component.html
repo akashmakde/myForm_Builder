@@ -1,0 +1,35 @@
+<div class="myContainer">
+<h3 class="text-warning">Profile Form </h3>
+
+<div [formGroup]="profileForm">
+    <div>
+    <div><label class="text-success" for="firstName">Your First Name</label></div>
+    <input type="text"(blur)="onTouched()" (input)="onChange($event.target.value)" formControlName="firstName" id="first-name" required/>
+    <div><span class="text-danger" *ngIf="profileForm.get('firstName').touched &&
+                                     profileForm.get('firstName').hasError('required')">
+                                     Please Enter your First Name</span></div>
+    </div>
+ 
+    <div>
+    <div><label class="text-success" for="last-Name">Your Last Name</label></div>
+    <input (blur)="onTouched()" (input)="onChange($event.target.value)"type="text" formControlName="lastName" id="last-name" required/>
+    <div><span class="text-danger" *ngIf="profileForm.get('lastName').touched &&
+                                     profileForm.get('lastName').hasError('required')">
+                                     Please Enter Last Name</span></div>
+    </div>
+
+    <div>
+    <div><label class="text-success" for="email">Your Email</label></div>
+    <input (blur)="onTouched()" (input)="onChange($event.target.value)" type="email" formControlName="email" id="email" required/>
+    <div><span class="text-danger" *ngIf="profileForm.get('email').touched &&
+                                     profileForm.get('email').hasError('required')">
+                                     Please Enter Email address</span></div>
+
+    <div><span class="text-danger" *ngIf="profileForm.get('email').touched &&
+                                        profileForm.get('email').hasError('email')">
+                                        Please Enter valid Email address</span></div>
+    </div>
+  
+
+</div>
+</div>

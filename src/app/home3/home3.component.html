@@ -1,0 +1,153 @@
+
+
+  <div class="mainDiv">
+    <div id="sidebar">
+     <ul class="nav flex-column mySidenavbar">
+      
+       <li class="nav-item">
+        <a class="nav-link" (click)="addControlFullname()">fullname</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addControlFullname()">Address</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Email</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">PhoneNo</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">CheckBox</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">SelectList</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">TextArea</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">RadioButtons</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">MultipleCheckbox</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Table</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Image Drop And Down</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Cards</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Carousel Images</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Carousel cards</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">AutoComplete</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Dual List box</a>
+       </li> 
+     </ul>
+   </div><!--sidebar div end-->
+   
+   <div class="inputField" id="inputField">
+      <form [formGroup]="shareCompDemo1" class="bg-light">     
+       
+        <!-- <div *ngIf="fullNameFlag" class="fullname" id="draggable">   
+           <h3 class="text-danger">Please enter your firstname and lastname</h3>   
+           <app-name-email-age [myObj]="myObjFullName" formControlName="fullname"></app-name-email-age> 
+           <button type="button" class="btn btn-danger" (click)="deleteFormControl('fullname')">Delete</button>      
+         </div>   
+       
+       <div *ngIf="addressFlag" class="fullname" id="draggable">   
+         <h4 class="text-danger">Please enter your address</h4>   
+         <app-name-email-age [myObj]="myObjAdress" formControlName="address"></app-name-email-age> 
+         <button type="button" class="btn btn-danger" (click)="deleteFormControl('address')">Delete</button>      
+       </div> -->
+     <div class="container" id ="hello">
+       
+       <div id="fullname" *ngFor="let count of fullname;let i=index" >   
+         <h3 class="text-danger">Please enter your firstname and lastname and {{count}}</h3>   
+         <app-name-email-age [myObj]="myObjFullNameA[i]" [formControlName]="fullname[i]"></app-name-email-age> 
+         <button type="button" class="btn btn-danger" (click)="deleteFormControl(fullname[i],i,fullnameSec)">Delete</button>      
+         <button type="button" class="btn btn-warning" (click)="editFullname(i)">Edit</button>      
+       </div> 
+       <div *ngIf="addressFlag" id="address">   
+         <h4 class="text-danger">Please enter your address</h4>   
+         <app-name-email-age [myObj]="myObjAdress" formControlName="address"></app-name-email-age> 
+         <button type="button" class="btn btn-danger" (click)="deleteFormControl('address')">Delete</button>    
+         <button type="button" class="btn btn-warning" (click)="editAddress('fullname')">Edit</button>      
+     
+       </div>
+   
+     </div>
+    
+       
+     {{shareCompDemo1.value |json}}
+   
+        <div id="submitID">
+         <button type="submit" class="btn btn-success " (click)="displayform()">Submit</button>  
+        </div>   
+     </form>
+    </div><!-- formID --> 
+   
+   <div *ngIf="editFullnameFlag" class="inputedit">
+   <ul class="nav flex-column justify-content-end">
+     <form [formGroup]="fullnameEdit">
+        <h1 class="text-danger">Edit fullname {{fullnameNo}}</h1>
+     <li class="nav-item">
+       <a> 
+        <div class="form-check">
+         <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="firstnameRequired" checked>
+         <label class="form-check-label" for="flexCheckChecked">firstname required</label> 
+       </div>
+     </a>
+       
+     </li>
+     <li class="nav-item">
+       <a> 
+         <div class="form-check">
+         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  formControlName="lastnameRequired" checked  >
+         <label class="form-check-label" for="flexCheckChecked">LastName required</label>
+       </div>
+     </a>
+     </li>
+     <li class="nav-item">
+       <label for="fname">Edit-Firstname:</label>
+       <input type="text" id="fname" name="fname" formControlName="firstname">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Edit-Lastname:</label>
+       <input type="text" id="fname" name="fname" formControlName="lastname">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Firstname minlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="firstnameMinlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Firstname maxlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="firstnameMaxlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Lastname minlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="lastnameMinlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Lastname maxlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="lastnameMaxlength">
+     </li>
+     <li class="nav-item">
+       <button type="button" class="btn btn-success" (click)="fullnameEdited()">Done</button>
+       <button type="button" class="btn btn-success" (click)="insertingInputF()">add</button>
+     </li>
+   </form>
+   </ul>
+   </div>
+   
+   </div><!-- main div -->
+   

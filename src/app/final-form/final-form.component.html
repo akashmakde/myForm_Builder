@@ -1,0 +1,15 @@
+<h3>Welcome final</h3>
+<!-- <app-home4 (dataRecieved)="myData($event)"></app-home4> -->
+<!-- <button (click)="myData()">FORM</button> -->
+<form [formGroup]="finalForm" class="bg-light">     
+       
+  
+     <div *ngFor="let item of myObj;let i=index">  
+         <div class="myBorder">        
+         <app-name-email-age [myObj]="item.myObj" [formControlName]="item.formControl"></app-name-email-age> 
+        </div>
+    </div>        
+     
+     <button type="submit" class="btn btn-success" (click)="submitForm()">Submit</button>  
+{{finalForm.value | json}}
+</form>

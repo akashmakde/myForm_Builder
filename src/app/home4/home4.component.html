@@ -1,0 +1,573 @@
+<!---this Friday 2 march  2021 , home component-4 We are only generating object data to send -->
+
+
+
+<div class="mainDiv">
+    <div id="sidebar">
+     <ul class="nav flex-column mySidenavbar">
+      
+       <li class="nav-item">
+        <a class="nav-link" (click)="addComponent('fullname')">Fullname</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('address')">Address</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('email')">Email</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('phoneNo')">Contact No</a>
+       </li>       
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('input')">Input</a>
+       </li>       
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('checkbox')">CheckBox</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('selectList')">SelectList</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('radioButton')">RadioButtons</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="addComponent('multiCheckbox')">MultipleCheckbox</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="addComponent('textArea')" >TextArea</a>
+        </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Table</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Image Drop And Down</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Cards</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Carousel Images</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Carousel cards</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">AutoComplete</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" href="#">Dual List box</a>
+       </li> 
+     </ul>
+   </div><!--sidebar div end-->
+   
+   <div class="inputField" id="inputField">
+       <h3>welcome to home4</h3>
+      <form [formGroup]="shareCompDemo1" class="bg-light">     
+       
+     <div cdkDropList class="container example-list" (cdkDropListDropped)="drop($event)">
+   
+      <div class="example-box" *ngFor="let item of dragItems;let i=index" cdkDrag>
+        <div>   
+          <h4 class="text-success">Please enter your {{item.formControl}}</h4>   
+          <app-name-email-age [myObj]="item.myObj"></app-name-email-age> 
+          <button type="button" class="btn btn-danger" (click)="deleteFormControl(item)">Delete</button>    
+          <button type="button" class="btn btn-warning" (click)="edit(item)">Edit</button>       
+        </div>        
+      </div>
+
+
+     </div><!-- drag and drop  ends -->    
+       
+   
+        <div id="submitID">
+         <button type="submit" class="btn btn-success " (click)="displayform()">Submit</button>  
+        </div>   
+     </form>
+    </div><!-- formID --> 
+    
+    <!-- now we are editing fullname fields -->
+   <div *ngIf="editFullnameFlag" class="inputedit">
+   <ul class="nav flex-column justify-content-end">
+     <form [formGroup]="fullnameEdit">
+        <h1 class="text-danger">Edit {{fullnameNo}}</h1>
+     <li class="nav-item">
+       <a> 
+        <div class="form-check">
+         <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="firstnameRequired" checked>
+         <label class="form-check-label" for="flexCheckChecked">firstname required</label> 
+       </div>
+     </a>
+       
+     </li>
+     <li class="nav-item">
+       <a> 
+         <div class="form-check">
+         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  formControlName="lastnameRequired" checked  >
+         <label class="form-check-label" for="flexCheckChecked">LastName required</label>
+       </div>
+     </a>
+     </li>
+     <li class="nav-item">
+       <label for="fname">Edit-Firstname:</label>
+       <input type="text" id="fname" name="fname" formControlName="firstname">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Edit-Lastname:</label>
+       <input type="text" id="fname" name="fname" formControlName="lastname">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Firstname placeholder:</label>
+       <input type="text" id="fname" name="fname" formControlName="firstnamePlaceholder">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Lastname placeholder:</label>
+       <input type="text" id="fname" name="fname" formControlName="lastnamePlaceholder">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Firstname minlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="firstnameMinlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Firstname maxlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="firstnameMaxlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Lastname minlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="lastnameMinlength">
+     </li>
+     <li class="nav-item">
+       <label for="fname">Lastname maxlength:</label>
+       <input type="number" id="fname" name="fname" formControlName="lastnameMaxlength">
+     </li>
+     <li class="nav-item">
+       <button type="button" class="btn btn-success" (click)="setFullname()">Set</button>
+       <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+     </li>
+   </form>
+   </ul>
+   </div>
+    <!--  editing fullname fields ends-->
+
+     <!--================================================================--- --> 
+
+        <!-- now we are editing input fields -->
+   <div *ngIf="editInputFlag" class="inputedit">
+    <ul class="nav flex-column justify-content-end">
+      <form [formGroup]="inputEdit">
+         <h1 class="text-danger">Edit {{inputNo}}</h1>
+      <li class="nav-item">
+        <a> 
+         <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+          <label class="form-check-label" for="flexCheckChecked">Field required</label> 
+        </div>
+       </a>        
+      </li>
+      
+      <li class="nav-item">
+        <label for="fname">Edit-Label:</label>
+        <input type="text" id="fname" name="fname" formControlName="label">
+      </li>
+      <li class="nav-item">
+        <label for="fname">Edit-Type:</label>
+        <input type="text" id="fname" name="fname" formControlName="type">
+      </li>
+      <li class="nav-item">
+        <label for="fname">Placeholder:</label>
+        <input type="text" id="fname" name="fname" formControlName="placeholder">
+      </li>
+     
+      <li class="nav-item">
+        <label for="fname">Minlength:</label>
+        <input type="number" id="fname" name="fname" formControlName="minlength">
+      </li>
+      <li class="nav-item">
+        <label for="fname">Maxlength:</label>
+        <input type="number" id="fname" name="fname" formControlName="maxlength">
+      </li>
+     
+      <li class="nav-item">
+        <button type="button" class="btn btn-success" (click)="setInput()">Set</button>
+        <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+      </li>
+    </form>
+    </ul>
+    </div>
+     <!--  editing fullname fields ends-->
+     <!--================================================================--- --> 
+
+        <!-- now we are TEXT AREA  -->
+   <div *ngIf="editTextareaFlag" class="inputedit">
+    <ul class="nav flex-column justify-content-end">
+      <form [formGroup]="textareaFB">
+         <h1 class="text-danger">Edit {{textAreaNo}}</h1>
+      <li class="nav-item">
+        <a> 
+         <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+          <label class="form-check-label" for="flexCheckChecked">TEXT AREA required</label> 
+        </div>
+       </a>        
+      </li>
+      
+      <li class="nav-item">
+        <label for="fname">Edit-Heading:</label>
+        <input type="text" id="fname" name="fname" formControlName="heading">
+      </li>
+      <li class="nav-item">
+        <label for="fname">Edit-errorMSG:</label>
+        <input type="text" id="fname" name="fname" formControlName="errorMSG">
+      </li>    
+      <li class="nav-item">
+        <label for="fname">Minlength:</label>
+        <input type="number" id="fname" name="fname" formControlName="minLength">
+      </li>
+      <li class="nav-item">
+        <label for="fname">Maxlength:</label>
+        <input type="number" id="fname" name="fname" formControlName="maxLength">
+      </li>
+     
+      <li class="nav-item">
+        <button type="button" class="btn btn-success" (click)="setTextArea()">Set</button>
+        <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+      </li>
+    </form>
+    </ul>
+    </div>
+     <!--  editing TEXT AREA ends-->
+
+      <!-- --=============================================================-->
+
+    <!-- now we are editing address fields -->
+    <div *ngIf="editAddressFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="addressEdit">
+           <h1 class="text-danger">Edit {{addressNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="addressRequired" checked>
+            <label class="form-check-label" for="flexCheckChecked">Address required</label> 
+          </div>
+         </a>          
+        </li>
+       
+        <li class="nav-item">
+          <label for="fname">Edit label-House No:</label>
+          <input type="text" id="fname" name="fname" formControlName="houseNo">
+        </li>
+        <li class="nav-item">
+          <label for="fname">Edit label-Address:</label>
+          <input type="text" id="fname" name="fname" formControlName="address">
+        </li>
+        <li class="nav-item">
+          <label for="fname">Edit label-Area:</label>
+          <input type="text" id="fname" name="fname" formControlName="area">
+        </li>
+        <li class="nav-item">
+          <label for="fname">Edit label-City:</label>
+          <input type="text" id="fname" name="fname" formControlName="city">
+        </li>
+        <li class="nav-item">
+          <label for="fname">Edit label-State:</label>
+          <input type="text" id="fname" name="fname" formControlName="state">
+        </li>
+        <li class="nav-item">
+          <label for="fname">Edit label-Zip Code:</label>
+          <input type="text" id="fname" name="fname" formControlName="zipCode">
+        </li>
+        <li class="nav-item">
+          <label for="fname">HOUSE NO placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="houseNoPlaceholder">
+        </li>
+        <li class="nav-item">
+          <label for="fname">ADDRESS placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="addressPlaceholder">
+        </li>
+        <li class="nav-item">
+          <label for="fname">AREA placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="areaPlaceholder">
+        </li>
+        <!-- <li class="nav-item">
+          <label for="fname">CITY placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="cityPlaceholder">
+        </li>
+        <li class="nav-item">
+          <label for="fname">state placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="statePlaceholder">
+        </li>
+        <li class="nav-item">
+          <label for="fname">zip code placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="zipCodePlaceholder">
+        </li> -->
+       
+        
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setAddress()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing address fields ends -->   
+
+      <!-- ===================================================================-- -->
+
+    <!--  editing email fields starts -->
+    <div *ngIf="editEmailFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="emailEditFB">
+           <h1 class="text-danger">Edit {{emailNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">Email required</label> 
+          </div>
+         </a>          
+        </li>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="emailValid" checked>
+            <label class="form-check-label" for="flexCheckChecked">Email validation</label> 
+          </div>
+         </a>          
+        </li>
+      
+        <li class="nav-item">
+          <label for="fname">Edit-Email:</label>
+          <input type="text" id="fname" name="fname" formControlName="label">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">Email placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="placeholder">
+        </li>        
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setEmail()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing email fields ends -->
+
+     <!-- ================================================================ --> 
+
+    <!--  editing phone no starts -->
+    <div *ngIf="editPhoneNoFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="phoneNoEditFB">
+           <h1 class="text-danger">Edit {{phoneNoNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">Phone No required</label> 
+          </div>
+         </a>          
+        </li>     
+      
+        <li class="nav-item">
+          <label for="fname">Edit label-PhoneNo:</label>
+          <input type="text" id="fname" name="fname" formControlName="label">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">edit-Phone No placeholder:</label>
+          <input type="text" id="fname" name="fname" formControlName="placeholder">
+        </li>        
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setPhoneNo()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing phone no fields ends -->
+
+     <!-- -================================================================- -->   
+
+    <!--  editing checkbox no starts -->
+    <div *ngIf="editCheckboxFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="checkboxFB">
+           <h1 class="text-danger">Edit {{checkboxNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">checkbox required</label> 
+          </div>
+         </a>          
+        </li>
+     
+      
+        <li class="nav-item">
+          <label for="fname">Edit label-checkbox heading:</label>
+          <input type="text" id="fname" name="fname" formControlName="heading">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">edit-Checkbox error msg:</label>
+          <input type="text" id="fname" name="fname" formControlName="errorMSG">
+        </li>        
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setCheckbox()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing checkboxfields ends -->
+
+   <!-- -==========================================================----- -->
+
+    <!--  editing radiobuttons  -->
+    <div *ngIf="editRadioButtonsFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="radioButtonsFB">
+           <h1 class="text-danger">Edit {{radioButtonNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">RadioButton field required</label> 
+          </div>
+         </a>          
+        </li>
+     
+      
+        <li class="nav-item">
+          <label for="fname">Edit label:</label>
+          <input type="text" id="fname" name="fname" formControlName="heading">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">Edit:error msg:</label>
+          <input type="text" id="fname" name="fname" formControlName="errorMSG">
+        </li> 
+        <li class="nav-item">
+          <label for="fname">Edit:value:</label>
+          <input type="text" id="fname" name="fname" formControlName="name">
+        </li> 
+        <div formArrayName="radioButtons">      
+        <li class="nav-item"*ngFor="let radioButton of radioButtonsFB.controls.radioButtons.controls;let i=index" [formGroupName]="i">
+          <label for="fname">RadioButton No:{{i+1}}</label>
+          <input type="text" id="fname" name="fname" formControlName="radioButton">
+          <button type="button" class="btn btn-warning" (click)="deleteRadioButton(i)">Delete</button>
+
+        </li> 
+      </div> 
+        <li class="nav-item">
+          <button type="button" class="btn btn-secondary" (click)="addRadioButtonsOnClick()">Add Radio-Button</button>
+        </li>       
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setRadioButtons()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing radiobuttons ends -->
+
+    <!-- --===============================================================- -->
+
+    <!--  editing multi checkboxes starts -->
+   <div *ngIf="editMultiCheckboxFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="multiCheckboxFB">
+           <h1 class="text-danger">Edit {{multiCheckboxNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">Atleast one checkbox required</label> 
+          </div>
+         </a>          
+        </li>
+     
+      
+        <li class="nav-item">
+          <label for="fname">Edit label:</label>
+          <input type="text" id="fname" name="fname" formControlName="heading">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">Edit:error msg:</label>
+          <input type="text" id="fname" name="fname" formControlName="errorMSG">
+        </li> 
+        
+        <div formArrayName="checkboxes">      
+        <li class="nav-item"*ngFor="let item of multiCheckboxFB.controls.checkboxes.controls;let i=index" [formGroupName]="i">
+          <label for="fname">checkbox No:{{i+1}}</label>
+          <input type="text" id="fname" name="fname" formControlName="checkbox">
+          <button type="button" class="btn btn-warning" (click)="deleteMultiCheckbox(i)">Delete</button>
+
+        </li> 
+      </div> 
+        <li class="nav-item">
+          <button type="button" class="btn btn-secondary" (click)="addMultiCheckboxOnClick()">Add checkboxes</button>
+        </li>       
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setMultiCheckbox()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing MULTI CHECKBOX ends -->
+    
+    <!-- --===============================================================- -->
+    <!--  editing SELECT LIST starts -->
+   <div *ngIf="editSelectListFlag" class="inputedit">
+      <ul class="nav flex-column justify-content-end">
+        <form [formGroup]="selectListFB">
+           <h1 class="text-danger">Edit {{selectListNo}}</h1>
+        <li class="nav-item">
+          <a> 
+           <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked"  formControlName="required" checked>
+            <label class="form-check-label" for="flexCheckChecked">select list required</label> 
+          </div>
+         </a>          
+        </li>
+     
+      
+        <li class="nav-item">
+          <label for="fname">Edit label:</label>
+          <input type="text" id="fname" name="fname" formControlName="heading">
+        </li>       
+        <li class="nav-item">
+          <label for="fname">Edit:error msg:</label>
+          <input type="text" id="fname" name="fname" formControlName="errorMSG">
+        </li> 
+        
+        <div formArrayName="selectListItems">      
+        <li class="nav-item"*ngFor="let item of selectListFB.controls.selectListItems.controls;let i=index" [formGroupName]="i">
+          <label for="fname">selectlist-item No:{{i+1}}</label>
+          <input type="text" id="fname" name="fname" formControlName="item">
+          <button type="button" class="btn btn-warning" (click)="deleteSelectListItem(i)">Delete</button>
+
+        </li> 
+      </div> 
+        <li class="nav-item">
+          <button type="button" class="btn btn-secondary" (click)="addSelectListItemsOnClick()">Add item</button>
+        </li>       
+      
+        <li class="nav-item">
+          <button type="button" class="btn btn-success" (click)="setSelectList()">Set</button>
+          <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+        </li>
+      </form>
+      </ul>
+      </div>
+    <!--  editing SELECT LIST ends -->
+    
+    <!-- --===============================================================- -->
+
+
+
+   </div><!-- main div -->
+   

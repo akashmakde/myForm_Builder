@@ -1,0 +1,7 @@
+<select class="form-select" aria-label="Default select example">
+    <option selected>Select {{listHeading}}</option>
+    <option *ngFor="let subject of selectlistArray; let i=index; " [value]="subject.id">{{subject.name}}</option>
+  
+  </select>
+
+ 

@@ -1,0 +1,189 @@
+
+
+
+
+
+
+<div class="container">
+  <h3 style="text-align: center;">Student information Form</h3>
+<form [formGroup]="studentInfo">
+  <div class="form-group">
+    <label for=""><b>Enter your name*</b></label>
+    <input type="text" class="form-control col-md-4" formControlName="name" required />
+    <span class="mywarningRed" *ngIf="
+        studentInfo.get('name').touched &&
+        studentInfo.get('name').hasError('required')
+      ">Please Enter your Name</span>
+  </div>
+<!-- -----------------------------radio button gender------------ -->
+  <div class="form-group">
+<h5>Enter gender* </h5>
+      <div>
+        <input type="radio" name="gender" value="male" formControlName="gender" required>Male
+      </div>
+      <div>
+        <input type="radio" name="gender" value="female" formControlName="gender" required>Female
+      </div>
+      <div>
+        <input type="radio" name="gender" value="other" formControlName="gender" required>Other
+      </div>
+      <div class="mywarningBlue">Your Gender:
+        <div class="mywarningRed">{{studentInfo.get('gender').value}}</div>
+        
+      </div>
+
+  </div>
+
+  <div class="form-group">
+    <label for=""><b>Enter your email*</b></label>
+    <input type="email" class="form-control col-md-4" id="" formControlName="email" required />
+    <span class="mywarningRed" *ngIf="
+        studentInfo.get('email').touched &&
+        studentInfo.get('email').hasError('required')
+      ">Please Enter your email addresss</span>
+      <span class="mywarningRed" *ngIf="
+      studentInfo.get('email').touched &&
+      studentInfo.get('email').hasError('email')
+    ">Please enter valid email addresss</span>
+  </div>
+
+  <div class="form-group">
+    <label for=""><b>Enter your Mobile no*</b></label>
+    <input type="number" class="form-control col-md-4" pattern="^\d{10}$" id="" formControlName="mobileNo" required />
+    <button type="submit" class="btn btn-primary"(click)="isDuplicateFound(studentInfo.get('mobileNo').value)">Check for Avaiability</button>
+    <span class="mywarningRed" *ngIf="duplicateMobileNoFound" >Mobile No Already registered by {{mobileUserName}}</span>
+    <span class="mywarningBlue" *ngIf="duplicateMobileNoNotFound ">Mobile No is available</span>
+    <span class="mywarningRed" *ngIf="
+        studentInfo.get('mobileNo').touched &&
+        studentInfo.get('mobileNo').hasError('required')
+      ">Please Enter your mobile no</span>
+    <span class="mywarningRed" *ngIf="studentInfo.get('mobileNo').hasError('pattern')">phone no must be 10 digit
+      no</span>
+  </div>
+ 
+  <div class="form-group">
+    <label for=""><b>Enter your Address*</b></label>
+    <input type="text" class="form-control col-md-4" id="" formControlName="address" required />
+    <span class="mywarningRed" *ngIf="
+        studentInfo.get('address').touched &&
+        studentInfo.get('address').hasError('required')
+      ">Please Enter your address</span>
+  </div>
+
+ 
+  <!-- ==============================checkbox============= -->
+  <div class="form-group">
+    <h5>Enter your emails</h5>
+    <div *ngFor="let data of emails">
+      <input type="checkbox" value=true (change)="onChange(data.email, $event.target.checked)" > {{data.email}}<br>
+    </div>
+  </div>
+  <!-- ///////////////////////////checkbox ends//////////////////// -->
+    <!-- <div>
+      <input type="checkbox" name="banana"  (change)="bananaCheck($event)"  formControlName="banana"> Banana
+      
+    </div> -->
+    <!-- <div>
+      <input type="checkbox" value="apple" formControlName="apple"> Apple
+    </div>
+    <div>
+      <input type="checkbox" value="watermelon" formControlName="watermelon"> Watermelon
+    </div>
+    <div>
+      <input type="checkbox" value="papaya" formControlName="papaya"> Papaya
+    </div>
+    <div>
+      <input type="checkbox" value="orange" formControlName="orange"> Oranges
+    </div>
+  </div> -->
+
+ 
+<!-- ------------------------------------branch start------------------ -->
+  <div class="form-group">
+    <h5>Enter your branch*</h5>
+    <select class="custom-select col-md-3" name="topic" formControlName="branch"
+    (blur)="validateTopic(studentInfo.get('branch').value)"
+     (change)="validateTopic(studentInfo.get('branch').value)">
+      <option value="default">My Branch is</option>
+      <option *ngFor="let branch of branches">{{ branch }}</option>
+    </select>
+    <span class="mywarningRed" *ngIf="studentInfo.get('branch').touched && topicHasError">Please enter your branch</span>
+  </div>
+<!-- -------------------------------------------branch end-------------------- -->
+
+
+  <!-- ------------------------------------multiple checkbox--------------- -->
+
+
+
+<!-- --------------------------------form array- hobbies------------------------- -->
+
+<div class="form-group">
+ <div  formArrayName="myHobbies">
+   <label for="hobbies"><b>Enter your Hobbies</b></label>
+
+    <div  class="row" *ngFor="let control of studentInfo.controls.myHobbies['controls']; let i=index;">
+      <div class="col-sm-3">
+       <input placeholder="hobby:{{i+1}}" type="text" class="form-control" [formControlName]="i" id="learn{{i}}" >
+     </div> 
+      <div class="col">
+       <button type="button" class="btn btn-outline-danger" (click)="removeHobby(i)">Remove Hobby</button>
+      </div>
+    </div>
+
+   <button type="button" class="btn btn-outline-primary" [disabled]="!studentInfo.get('myHobbies').valid" (click)="addNewHobby()">Add Hobby</button>
+
+ </div>
+</div>
+<!-- ------------------------------------------hobbies end----------------------------- -->
+
+<!-- --------------------------------------submit---------------------------------- -->
+  <button *ngIf="!isEdit" type="submit" class="btn btn-primary"[disabled]="!studentInfo.valid" (click)="addStudent(studentInfo.value)">Submit</button>
+  <button  *ngIf="isEdit" type="submit" class="btn btn-primary"[disabled]="!studentInfo.valid" (click)="updateButtonClicked();updateUser(studentInfo.value);">Update</button>
+  <button   type="submit" class="btn btn-danger" (click)="resetForm()">Reset</button>
+  <h6>Note:Submit Button is disabled until you fill all mandatory values</h6>
+  <div *ngIf="submittedSuccessfully" class="alert alert-success" role="alert">
+    Form has been submitted successfully
+  </div>
+</form>
+</div>
+{{studentInfo.value |json}}
+
+<!-- -------------------------showing all form data----------------------------- -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Student</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Email</th>
+      <th scope="col">PhoneNo</th>
+      <th scope="col">Address</th>
+      <th scope="col">Branch</th>
+      <th scope="col">EmailList</th>
+      <th scope="col">Hobbies</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of allUser">
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.name}}</td>
+      <td>{{user.gender}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.mobileNo}}</td>
+      <td>{{user.address}}</td>
+      <td>{{user.branch}}</td>
+      <td>{{user.useremail}}</td>
+      <td>{{user.myHobbies}}</td> 
+      <td><button type="button" class="btn btn-warning"(click)="editButtonClicked();setValuesToEdit(user)">Edit</button> </td>
+     <td><button type="button" class="btn btn-danger"(click)="deleteStudent(user)">Delete</button>  </td> 
+
+    </tr>
+  
+  </tbody>
+</table>
+
+<!-- --------------------------------------submit---------------------------------- -->
+

@@ -1,0 +1,16 @@
+<div class="myContainer">
+<h3 class="text-primary">Main Form </h3>
+
+<form [formGroup]="signupForm" (ngSubmit)="submit()">
+    <app-profile formControlName="profile"></app-profile>
+    <div class="text-dark">
+        <span *ngIf ="signupForm.get('profile').touched">profile form touched</span>
+    </div>
+
+    <!-- <app-password formControlName="profile"></app-password> -->
+
+    <button type="submit" class="btn btn-primary"[disabled]="!signupForm.valid">Submit</button>
+
+</form>
+</div>
+{{signupForm.value|json}}
