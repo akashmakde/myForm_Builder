@@ -10,12 +10,21 @@ export class DynamicTableComponent implements OnInit {
 
   empForm:FormGroup;
   constructor(private fb:FormBuilder) { }
-  count=0;
+  
   ngOnInit(): void {
     this.empForm = this.fb.group({
       employees: this.fb.array([])
     })
     
+    for(let i=0;i<3;i++){
+      this.employees().push(this.newEmployee());
+    }
+    for(let i=0;i<3;i++){
+      for(let j=0;j<4;j++){
+        this.employeeSkills(i).push(this.newSkill());
+      }
+    }
+ 
   }
   title = 'Nested FormArray Example Add Form Fields Dynamically';
  
@@ -34,15 +43,10 @@ export class DynamicTableComponent implements OnInit {
  
   addEmployee() {
     this.employees().push(this.newEmployee());
-    console.log(this.employeeSkills(0).length);
-
-    let length = this.employeeSkills(0).length;
-    if(this.count>0){
-    for(let i=0; i<length;i++){
-      this.addEmployeeSkill(this.count);
+    let length = (this.employees().length)-1;
+    for(let i=0;i<this.employeeSkills(0).length;i++){
+      this.employeeSkills(length).push(this.newSkill());
     }
-  }
-  this.count++;
   }
  
  
@@ -62,18 +66,29 @@ export class DynamicTableComponent implements OnInit {
   }
  
   addEmployeeSkill(empIndex:number) {
-    this.employeeSkills(empIndex).push(this.newSkill());
+   // this.employeeSkills(empIndex).push(this.newSkill());
+    for(let i=0;i<this.employees().length;i++){
+      this.employeeSkills(i).push(this.newSkill());
+    }
   }
   
   addEmployeeSkillMy() {
-// let index:number;
-  for(let index=0;index<this.employeeSkills(0).length;index++){
-    this.employeeSkills(index).push(this.newSkill());
+  for(let i=0;i<this.employees().length;i++){
+    this.employeeSkills(i).push(this.newSkill());
+  }
+}
+  insertEmployeeSkillMy(index) {
+  for(let i=0;i<this.employees().length;i++){
+    this.employeeSkills(i).insert(index+1,this.newSkill());
   }
 }
  
-  removeEmployeeSkill(empIndex:number,skillIndex:number) {
-    this.employeeSkills(empIndex).removeAt(skillIndex);
+  removeEmployeeSkill(skillIndex:number) {
+
+    for(let i=0;i<this.employees().length;i++){
+      this.employeeSkills(i).removeAt(skillIndex);
+    }
+
   }
  
   onSubmit() {

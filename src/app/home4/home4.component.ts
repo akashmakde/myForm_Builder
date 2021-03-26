@@ -1010,6 +1010,8 @@ for(let i=0;i<this.selectListFB.get('selectListItems').value.length;i++){
  }
 
  deleteFormControl(item){
+  alert("Delete component "+item.formControl+"?");
+
 let index = this.dragItems.indexOf(item);
 this.dragItems.splice(index,1);//removing received item from list
  }
@@ -1083,7 +1085,7 @@ addComponent(typeComp:string){
       break;
     }
   }//switch ends
-
+alert("Adding component "+typeComp);
  }
  
 

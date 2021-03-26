@@ -4,56 +4,85 @@
  
 <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
  
-  <div formArrayName="employees">
+  <!-- <div formArrayName="employees">
  
     <div *ngFor="let employee of employees().controls; let empIndex=index">
  
       <div [formGroupName]="empIndex" style="border: 1px solid blue; padding: 10px; width: 100%; margin: 5px;">
-        {{empIndex}}
-        <!-- First Name :
-        <input type="text" formControlName="firstName">
-        Last Name:
-        <input type="text" formControlName="lastName"> -->
- 
-        <button class="btn btn-danger" (click)="removeEmployee(empIndex)">Remove</button>
- 
- 
+                
         <div formArrayName="skills">
  
-          <ng-container *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index">
- 
- 
+          <ng-container *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index"> 
  
             <ng-container [formGroupName]="skillIndex">
-              {{skillIndex}}
-              Skill :
+              {{empIndex}},{{skillIndex}}
+             
               <input type="text" formControlName="skill">             
  
-              <button (click)="removeEmployeeSkill(empIndex,skillIndex)">Remove</button>
+              <button class="btn btn-danger" (click)="removeEmployeeSkill(empIndex,skillIndex)">X</button>
  
             </ng-container>
  
           </ng-container>
-          <ng-container>
-          <button type="button" class="btn btn-warning" (click)="addEmployeeSkill(empIndex)">Add Skill</button>
-         </ng-container> 
+          <button class="btn btn-warning" (click)="removeEmployee(empIndex)">RemoveRow={{empIndex}}</button>
+
         </div>
- 
  
       </div>
  
     </div>
   </div>
   <p>
-    <button type="button" (click)="addEmployee()">Add Employee</button>
+    <button type="button" class="btn btn-secondary" (click)="addEmployee()">Add Row</button>
   </p>
   <ng-container>
     <button type="button" class="btn btn-warning" (click)="addEmployeeSkillMy()">Add Col</button>
    </ng-container> 
   <p>
     <button type="submit">Submit</button>
-  </p>
- 
+  </p> -->
+  <table class="table table-bordered">
+    <thead>
+      <!-- <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr> -->
+    </thead>
+    <tbody formArrayName="employees">
+      <tr  *ngFor="let employee of employees().controls; let empIndex=index">
+        <ng-container  [formGroupName]="empIndex">
+          <ng-container formArrayName="skills">
+            <ng-container *ngFor="let skill of employeeSkills(empIndex).controls; let skillIndex=index">
+              <ng-container [formGroupName]="skillIndex">
+                
+                <td>
+                  <input type="text" formControlName="skill"> 
+                
+                  <ng-container *ngIf="empIndex==0">
+                    <button class="btn btn-danger" (click)="removeEmployeeSkill(skillIndex)">X</button>
+                    <button class="btn btn-warning" (click)="insertEmployeeSkillMy(skillIndex)">+</button>
+                  </ng-container> 
+                </td>
+               
+              </ng-container>
+            </ng-container>
+            <button class="btn btn-warning" (click)="removeEmployee(empIndex)">RemoveRow={{empIndex}}</button>
+
+          </ng-container>
+
+        </ng-container>
+        
+      
+      </tr>
+     
+     
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-secondary" (click)="addEmployee()">Add Row</button>
+  <button type="button" class="btn btn-warning" (click)="addEmployeeSkillMy()">Add Col</button>
+
 </form>
  
  
