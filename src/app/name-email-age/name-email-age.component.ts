@@ -57,12 +57,103 @@ export class NameEmailAgeComponent implements  ControlValueAccessor,OnChanges,Va
     owlCarouselCardsFlag:boolean=false;
     owlCarouselImgFlag:boolean=false;
     autoCompleteFlag:boolean=false;
-    tranItemsBetListFlag:boolean=false;
+    tranItemsBetListFlag:boolean=false;//for angular items
+    itemTransferBetweenListFlag:boolean=false;//my custom itemTransferBetweenList
 
     applyMyCustmClasses:string=null;
    // changeCounter:number;
 
 //=======================================================================================
+//=======================TRANSFERING SELECTED ITEM BETWEEN LISTS ===================================================
+list1 = [
+  // { listItem: 'AVENGERS',    selected: false },
+  // { listItem: 'BATMAN',      selected: false },
+  // { listItem: 'SPIDER-MAN',  selected: false },
+  // { listItem: 'WONDER WOMEN',selected: false },
+  // { listItem: 'IRON MAN',    selected: false },
+  // { listItem: 'IRON MAN-2',  selected: false },
+  // { listItem: 'IRON MAN-3',  selected: false },
+];
+list2 = [
+       //empty array
+];
+
+public toggleSelection(item: { listItem: string; selected: boolean },list: number) {
+  item.selected = !item.selected;
+  if (list === 1) {
+    this.list2.forEach((item) => {
+      item.selected = false;
+    });
+  }
+  if (list === 2) {
+    this.list1.forEach((item) => {
+      item.selected = false;
+    });
+  }
+}
+
+public moveSelected(direction) {
+  if (direction === 'left') {
+    this.list2.forEach((item) => {
+      if (item.selected) {
+        this.list1.push(item);
+      }
+    });
+    this.list2 = this.list2.filter((i) => !i.selected);
+    //removing selected item class
+    this.removeSelected(this.list1);
+  } else {
+    this.list1.forEach((item) => {
+      if (item.selected) {
+        this.list2.push(item);
+      }
+    });
+    this.list1 = this.list1.filter((i) => !i.selected);
+    //removing selected item class
+    this.removeSelected(this.list2);
+  }
+}
+
+public moveAll(direction: string) {
+  if (direction === 'left') {
+    this.list1 = [...this.list1, ...this.list2];
+    this.list2 = [];
+    //removing selected item
+    this.removeSelected(this.list1);
+  } else {
+    this.list2 = [...this.list2, ...this.list1];
+    this.list1 = [];
+    //removing selected item
+    this.removeSelected(this.list2);
+  }
+}
+//removing color of selected items if moved to other list
+public removeSelected(list) {
+  list.forEach((item) => {
+    if (item.selected) {
+      item.selected = !item.selected;
+    }
+  });
+} //removing color of selected items if moved to other list ends
+
+addItemLeftList(){
+  let item = { listItem:null,  selected: false };
+  item.listItem =  this.reusableComponentform.get('itemLeft').value;
+  if ( item.listItem != null) {
+    this.list1.push(item);           
+  }
+ this.reusableComponentform.controls['itemLeft'].setValue(null);
+}
+addItemRightList(){
+  let item = { listItem:"",  selected: false };
+  item.listItem =  this.reusableComponentform.get('itemRight').value;
+  if ( item.listItem != null) {
+    this.list2.push(item);           
+  }   this.reusableComponentform.controls['itemRight'].setValue(null);
+}
+//=======================TRANSFERING SELECTED ITEM BETWEEN LISTS ENDS ===================================================
+//=======================================================================================
+
   // ===================CKE EDITOR===================================================
   //public Editor = ClassicEditor;
   public Editor = ClassicEditor;
@@ -279,7 +370,9 @@ addTable2ColumnOnClick():void{
  this.addTable2RowOnClick();
 
 }
-///////////////////////////////table2////////////////////////
+///////////////////////////////table2/ ends///////////////////////
+
+
   //=======================ADD form CONTROL FUNCTION/ ===================================
   addFormControl(myFormControlName:string,validationArr){    
       this.reusableComponentform.addControl(myFormControlName,new FormControl());   //adding controls   
@@ -444,9 +537,17 @@ addTable2ColumnOnClick():void{
             this.owlCarouselCardsFlag=true; //setting true  for template  
           break;
           }
-         
+         //for angular material
           case "tranItemsBetList":{
             this.tranItemsBetListFlag=true; //setting true  for template  
+          break;
+          }
+          //my customs transfer item between lists
+          case "transferItemsBetList":{
+            this.itemTransferBetweenListFlag=true; //setting true  for template  
+            this.reusableComponentform.addControl('itemLeft',new FormControl()); 
+            this.reusableComponentform.addControl('itemRight',new FormControl()); 
+
           break;
           }
           case "autoComplete":{

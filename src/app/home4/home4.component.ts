@@ -81,7 +81,12 @@ myObjInput={
 myObjEmail={
   inputfield:   
   {fields:[
-           {label:"Email",formControlName:"email",type:"email", placeholder:"please enter your email",  validation:{required:true,email:true}},
+           { 
+             label:"Email",
+             formControlName:"email",
+             type:"email",
+             placeholder:"please enter your email", 
+             validation:{required:true,email:true}},
   ]}
 }
 emailCount=1;
@@ -91,8 +96,18 @@ emailNo:string=null;
 myObjPhoneNo={
   inputfield:   
   {fields:[
-           {label:"Phone no",formControlName:"number",type:"number",placeholder:"please enter your phone no", validation:{required:true,maxLength:null,minLength:null}},
-  ]}
+           {label:"Phone no",
+            formControlName:"number",
+            type:"number",
+            placeholder:"please enter your phone no",
+            validation:{ 
+                         required:true,
+                         maxLength:null,
+                         minLength:null
+                        }
+            }
+          ]
+   }
 }
 phoneNoCount = 1;
 phoneNoNo:string=null;
@@ -101,8 +116,10 @@ editPhoneNoFlag=false;
 //////////defining object of phone no "myObjCheckbox" ////////////////////////////////
 myObjCheckbox={
   checkbox:
-  { heading:"Agree to conditions",validation:{required:true},
-    errorMSG:"Please Agree to terms and conditions to proceed" },
+  { heading:"Agree to conditions",
+    validation:{required:true},
+    errorMSG:"Please Agree to terms and conditions to proceed" 
+  },
 };
 checkboxNo:string=null;
 checkboxCount=1;
@@ -151,7 +168,8 @@ myObjRadioButtons={
      heading:"Select your gender",
      validation:{required:true},
      errorMSG:"Please select your gender",
-     noOfRadioButton:3,name:"gender",
+     noOfRadioButton:3,
+     name:"gender",
      options:["Male","Female","Other"]
     }
   };
@@ -178,6 +196,9 @@ myObjMultiCheckbox={
 myObjTable2={
   table2:{}
 }
+myTransferItemsBetList={
+  transferItemsBetList:{}
+}
 
 ////////////////////table2/////////////////
 
@@ -203,6 +224,7 @@ dragItems=[
             {formControl:"textarea1",        myObj:this.myObjTextarea,     type:"textArea"},         
             {formControl:"radiobuttons1",    myObj:this.myObjRadioButtons, type:"radioButton"},         
             {formControl:"radiobuttons1",    myObj:this.myObjTable2,       type:"radioButton"},         
+            {formControl:"listItems",        myObj:this.myTransferItemsBetList,     type:"transferItemsBetList"},         
           ];
   currentItem: any;//this object will hold current item to edit(from edit() fumction)
   editEmailFlag: boolean;

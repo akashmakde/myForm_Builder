@@ -65,7 +65,7 @@
 
 
 
-<!-- //////////////ckeditor///////////////////////////////// -->
+<!-- ////////////////////CK EDITOR///////////////////////////////// -->
 <div  *ngIf="CKEditorFlag">
   <ckeditor class="myEditor" [editor]="Editor" [config]="ckconfig" formControlName="ckeditor" required></ckeditor>
   <span class="text-danger" *ngIf="reusableComponentform.get('ckeditor').touched &&
@@ -73,10 +73,9 @@
   <span class="text-danger" *ngIf="reusableComponentform.get('ckeditor').touched &&                          
                           reusableComponentform.get('ckeditor').hasError('maxlength')">words must be between 25 to 100</span>
 </div>
+<!-- =====================================CK EDITOR======================================== -->
 
-<!-- =====================================ckeditor ends here======================================== -->
-<!-- =====================================dropDown================================================= -->
-
+<!-- =====================================DROP DOWN================================================= -->
 <div *ngIf="dropdownFlag" class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    {{myObj.dropdown.heading}}
@@ -85,7 +84,7 @@
     <a *ngFor="let data of myObj.dropdown.items"  class="dropdown-item" [routerLink]="data.dropDownRoutLinks">{{data.item}}</a>   
   </div>
 </div>
-<!-- =====================================dropDown ends================================================= -->
+<!-- =====================================DROP DOWN ENDS================================================= -->
 
 
 <!-- ===================================TEXT AREA=========================================== -->
@@ -110,7 +109,7 @@
 <div *ngIf="radioButtonFlag">
   <h3 class="text-primary">Please select your {{myObj.radioButton.name}}</h3>
   <div *ngFor="let option of myObj.radioButton.options" class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" [name]="myObj.radioButton.name" [id]="myObj.radioButton.name" [value]="option"
+    <input class="form-check-input" type="radio" [name]="myObj.radioButton.name" [id]="option" [value]="option"
      [formControlName]="myObj.radioButton.name" [required]="myObj.radioButton.validation.required">
     <label class="form-check-label" for="inlineRadio1">{{option}}</label>
   </div>
@@ -194,6 +193,48 @@
 
 
 <!-- ==============================TABLE 2 ENDS========================================== -->
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ==============================TRANSER ITEMS BETWEEN LISTS========================================== -->
+<div class="container-itemTransferBetweenList" *ngIf="itemTransferBetweenListFlag">
+  <ul class="itemTransferBetweenList-UL">
+    listItem1
+    <li 
+    class="itemTransferBetweenList-LI"
+      *ngFor="let item of list1" 
+      [class.item-selected-itemTransferBetweenList]="item.selected"
+      (click)="toggleSelection(item, 1)"      
+      >{{item.listItem}}
+    </li> 
+    <li class="itemTransferBetweenList-LI" >
+      <input type="text" placeholder="Add item" formControlName="itemLeft">
+    </li> 
+    <li class="itemTransferBetweenList-LI">
+      <button type="button" class="btn btn-success" (click)="addItemLeftList()">Add</button>
+    </li>
+  </ul>
+  <div class="buttons-container-itemTransferBetweenList">
+    <button type="button" class="btn btn-warning" (click)="moveAll('right')">Move all Right</button>
+    <button type="button" class="btn btn-success" (click)="moveSelected('right')">RIGHT</button>
+    <button type="button" class="btn btn-warning" (click)="moveAll('left')">Move all Left</button>
+    <button type="button" class="btn btn-success"(click)="moveSelected('left')">Left</button>
+  </div>
+  <ul class="itemTransferBetweenList-UL">
+    listItem2
+    <li class="itemTransferBetweenList-LI"
+      *ngFor="let item of list2" 
+      [class.item-selected-itemTransferBetweenList]="item.selected"
+      (click)="toggleSelection(item, 2)">{{item.listItem}}</li>
+      <li class="itemTransferBetweenList-LI">
+        <input type="text" placeholder="Add item" formControlName="itemRight">
+      </li> 
+      <li class="itemTransferBetweenList-LI">
+        <button type="button" class="btn btn-success" (click)="addItemRightList()">Add</button>
+      </li>
+  </ul>
+</div>
+<!-- ==============================TRANSER ITEMS BETWEEN LISTS ENDS========================================== -->
+
+
 
 </div><!-- LAST div of FORM -->
 

@@ -132,12 +132,18 @@ autoComplete: {
       name: string;
   }[];
   placeholder: string;
-}
+};
 tranItemsBetList: {
   todo: string[];
   done: string[];
   toDoHeading: string;
   doneHeading: string;
+};
+transferItemsBetList: {
+  // todo: string[];
+  // done: string[];
+  // toDoHeading: string;
+  // doneHeading: string;
 };
 };
 
