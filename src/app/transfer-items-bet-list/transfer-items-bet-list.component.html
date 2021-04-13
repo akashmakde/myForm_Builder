@@ -1,0 +1,44 @@
+
+<h4>
+    Clicking on items toggles their selection, single arrow buttons move the selected items, double-arrows move all items
+  </h4>
+  <form [formGroup]="itemsList">
+  <div class="container-itemTransferBetweenList">
+    <ul class="itemTransferBetweenList-UL">
+      listItem
+      <li 
+      class="itemTransferBetweenList-LI"
+        *ngFor="let item of list1" 
+        [class.item-selected-itemTransferBetweenList]="item.selected"
+        (click)="toggleSelection(item, 1)"      
+        >{{item.listItem}}   
+  
+      </li> 
+      <li class="itemTransferBetweenList-LI" >
+        <input type="text" placeholder="Add item" formControlName="itemLeft">
+      </li> 
+      <li class="itemTransferBetweenList-LI">
+        <button type="button" class="btn btn-success" (click)="addItemLeftList()">Add</button>
+      </li>
+    </ul>
+    <div class="buttons-container-itemTransferBetweenList">
+      <button type="button" class="btn btn-warning" (click)="moveAll('right')">Move all Right</button>
+      <button type="button" class="btn btn-success" (click)="moveSelected('right')">RIGHT</button>
+      <button type="button" class="btn btn-warning" (click)="moveAll('left')">Move all Left</button>
+      <button type="button" class="btn btn-success"(click)="moveSelected('left')">Left</button>
+    </div>
+    <ul class="itemTransferBetweenList-UL">
+      listItem WATCHED
+      <li class="itemTransferBetweenList-LI"
+        *ngFor="let item of list2" 
+        [class.item-selected-itemTransferBetweenList]="item.selected"
+        (click)="toggleSelection(item, 2)">{{item.listItem}}</li>
+        <li class="itemTransferBetweenList-LI">
+          <input type="text" placeholder="Add item" formControlName="itemRight">
+        </li> 
+        <li class="itemTransferBetweenList-LI">
+          <button type="button" class="btn btn-success" (click)="addItemRightList()">Add</button>
+        </li>
+    </ul>
+  </div>
+  </form>

@@ -13,86 +13,84 @@ export class DynamicTableComponent implements OnInit {
   
   ngOnInit(): void {
     this.empForm = this.fb.group({
-      employees: this.fb.array([])
+      table: this.fb.array([])
     })
     
     for(let i=0;i<3;i++){
-      this.employees().push(this.newEmployee());
+      this.table().push(this.newRow());
     }
     for(let i=0;i<3;i++){
       for(let j=0;j<4;j++){
-        this.employeeSkills(i).push(this.newSkill());
+        this.rowsItems(i).push(this.newItem());
       }
     }
  
   }
-  title = 'Nested FormArray Example Add Form Fields Dynamically';
+  // title = 'Nested FormArray Example Add Form Fields Dynamically';
  
  
-  employees(): FormArray {
-    return this.empForm.get("employees") as FormArray
+  table(): FormArray {
+    return this.empForm.get("table") as FormArray
   }
  
  
-  newEmployee(): FormGroup {
+  newRow(): FormGroup {
     return this.fb.group({   
-      skills:this.fb.array([])
+      items:this.fb.array([])
     })
   }
  
  
-  addEmployee() {
-    this.employees().push(this.newEmployee());
-    let length = (this.employees().length)-1;
-    for(let i=0;i<this.employeeSkills(0).length;i++){
-      this.employeeSkills(length).push(this.newSkill());
+  addRow() {
+    this.table().push(this.newRow());
+    let length = (this.table().length)-1;
+    for(let i=0;i<this.rowsItems(0).length;i++){
+      this.rowsItems(length).push(this.newItem());
     }
   }
  
  
-  removeEmployee(empIndex:number) {
-    this.employees().removeAt(empIndex);
+  removeRow(rowIndex:number) {
+    this.table().removeAt(rowIndex);
   }
  
  
-  employeeSkills(empIndex:number) : FormArray {
-    return this.employees().at(empIndex).get("skills") as FormArray;
+  rowsItems(rowIndex:number) : FormArray {
+    return this.table().at(rowIndex).get("items") as FormArray;
   }
  
-  newSkill(): FormGroup {
+  newItem(): FormGroup {
     return this.fb.group({
-      skill: '',      
+      item: '',      
     })
   }
  
-  addEmployeeSkill(empIndex:number) {
-   // this.employeeSkills(empIndex).push(this.newSkill());
-    for(let i=0;i<this.employees().length;i++){
-      this.employeeSkills(i).push(this.newSkill());
+  addRowItem(rowIndex:number) {
+   // this.rowsItems(rowIndex).push(this.newItem());
+    for(let i=0;i<this.table().length;i++){
+      this.rowsItems(i).push(this.newItem());
     }
   }
   
-  addEmployeeSkillMy() {
-  for(let i=0;i<this.employees().length;i++){
-    this.employeeSkills(i).push(this.newSkill());
-  }
-}
-  insertEmployeeSkillMy(index) {
-  for(let i=0;i<this.employees().length;i++){
-    this.employeeSkills(i).insert(index+1,this.newSkill());
+  // addEmployeeSkillMy() {
+  // for(let i=0;i<this.table().length;i++){
+  //   this.rowsItems(i).push(this.newItem());
+  // }
+// }
+  insertRowItem(index) {
+  for(let i=0;i<this.table().length;i++){
+    this.rowsItems(i).insert(index+1,this.newItem());
   }
 }
  
-  removeEmployeeSkill(skillIndex:number) {
-
-    for(let i=0;i<this.employees().length;i++){
-      this.employeeSkills(i).removeAt(skillIndex);
+  removeRowItem(itemIndex:number) {
+    for(let i=0;i<this.table().length;i++){
+      this.rowsItems(i).removeAt(itemIndex);
     }
-
   }
  
   onSubmit() {
-    console.log(this.empForm.value);
+    //console.log(this.empForm.value);
   }
  
 

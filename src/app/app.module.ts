@@ -45,6 +45,8 @@ import { Home4Component } from './home4/home4.component';
 import { FinalFormComponent } from './final-form/final-form.component';
 import { NestedFormArrayExComponent } from './nested-form-array-ex/nested-form-array-ex.component';
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
+import { TransferItemsBetListComponent } from './transfer-items-bet-list/transfer-items-bet-list.component';
+import { DragAndDropAgMatComponent } from './drag-and-drop-ag-mat/drag-and-drop-ag-mat.component';
 
 
 
@@ -81,7 +83,9 @@ import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
     Home4Component,
     FinalFormComponent,
     NestedFormArrayExComponent,
-    DynamicTableComponent
+    DynamicTableComponent,
+    TransferItemsBetListComponent,
+    DragAndDropAgMatComponent
   ],
   imports: [
     BrowserModule,

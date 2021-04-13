@@ -36,54 +36,60 @@
         <li class="nav-item">
           <a class="nav-link"  (click)="addComponent('textArea')" >TextArea</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link"  (click)="addComponent('table2')" >Table2</a>
+        </li>     
        <li class="nav-item">
-         <a class="nav-link" href="#">Table</a>
+         <a class="nav-link" (click)="addComponent('dropDown')">DropDown</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">Image Drop And Down</a>
+         <a class="nav-link" (click)="addComponent('ckeditor')">CKEDITOR</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">Cards</a>
+         <a class="nav-link" (click)="addComponent('imageDragAndDrop')">Image Drop And Down</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">Carousel Images</a>
+         <a class="nav-link" (click)="addComponent('cards')">Cards</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">Carousel cards</a>
+         <a class="nav-link" (click)="addComponent('owlCarouselImages')">Carousel Images</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">AutoComplete</a>
+         <a class="nav-link" (click)="addComponent('owlCarouselCards')">Carousel cards</a>
        </li>
        <li class="nav-item">
-         <a class="nav-link" href="#">Dual List box</a>
+         <a class="nav-link" (click)="addComponent('autoComplete')">AutoComplete</a>
+       </li>
+       <li class="nav-item">
+         <a class="nav-link" (click)="addComponent('transferItemsBetList')">Dual List box</a>
        </li> 
      </ul>
    </div><!--sidebar div end-->
    
    <div class="inputField" id="inputField">
        <h3>welcome to home4</h3>
-      <form [formGroup]="shareCompDemo1" class="bg-light">     
+    <form [formGroup]="shareCompDemo1" class="bg-light">     
        
-     <div cdkDropList class="container example-list" (cdkDropListDropped)="drop($event)">
-   
-      <div class="example-box" *ngFor="let item of dragItems;let i=index" cdkDrag>
-        <div>   
-          <h4 class="text-success">Please enter your {{item.formControl}}</h4>   
-          <app-name-email-age [myObj]="item.myObj"></app-name-email-age> 
-          <button type="button" class="btn btn-danger" (click)="deleteFormControl(item)">Delete</button>    
-          <button type="button" class="btn btn-warning" (click)="edit(item)">Edit</button>       
-        </div>        
-      </div>
+        <div cdkDropList class="container example-list" (cdkDropListDropped)="drop($event)">
+      
+          <div class="example-box" *ngFor="let item of dragItems;let i=index" cdkDrag>
+            <div>   
+              <h4 class="text-success">Please enter your {{item.formControl}}</h4>   
+              <app-name-email-age [myObj]="item.myObj"></app-name-email-age> 
+              <button type="button" class="btn btn-danger" (click)="deleteFormControl(item)">Delete</button>    
+              <button type="button" class="btn btn-warning" (click)="edit(item)">Edit</button>       
+            </div>        
+          </div>
 
 
-     </div><!-- drag and drop  ends -->    
+        </div><!-- drag and drop  ends -->    
        
    
         <div id="submitID">
          <button type="submit" class="btn btn-success " (click)="displayform()">Submit</button>  
         </div>   
-     </form>
-    </div><!-- formID --> 
+    </form>
+  </div><!-- formID --> 
     
     <!-- now we are editing fullname fields -->
    <div *ngIf="editFullnameFlag" class="inputedit">
@@ -566,7 +572,40 @@
     <!--  editing SELECT LIST ends -->
     
     <!-- --===============================================================- -->
-
+   <!--  =================IMAGE CAROUSEL(OWL)====================================-->
+   <div *ngIf="editOwlImageCarouselFlag" class="inputedit">
+    <ul class="nav flex-column justify-content-end">
+      <form [formGroup]="owlImageCarouselFB">
+         <h1 class="text-danger">Edit {{imageCarouselNo}}</h1>  
+    
+      
+      <div formArrayName="images">      
+      <li class="nav-item"*ngFor="let item of owlImageCarouselFB.controls.images.controls;let i=index" [formGroupName]="i">
+        <label for="fname">Image{{i+1}} Title:</label>
+        <input type="text" id="fname" name="fname" formControlName="title">
+        <label for="fname">Image{{i+1}} description:</label>
+        <input type="text" id="fname" name="fname" formControlName="descriptiom">
+        <label for="fname">Image{{i+1}} Src:</label>
+        <input type="text" id="fname" name="fname" formControlName="imageSrc">
+        <label for="fname">Alt Message:</label>
+        <input type="text" id="fname" name="fname" formControlName="alt">
+        <button type="button" class="btn btn-warning" (click)="deleteOwlImageCarousel(i)">Delete</button>
+      </li> 
+    </div> 
+      <li class="nav-item">
+        <button type="button" class="btn btn-secondary" (click)="addOwlImageOnClick()">Add Image</button>
+      </li>       
+    
+      <li class="nav-item">
+        <button type="button" class="btn btn-success" (click)="setMultiCheckbox()">Set</button>
+        <button type="button" class="btn btn-danger" (click)="closeEditSidebars()">Close</button>
+      </li>
+    </form>
+    </ul>
+    </div>
+   <!--  IMAGE CAROUSEL(OWL) ENDS-->
+  
+  <!-- --===============================================================- -->
 
 
    </div><!-- main div -->

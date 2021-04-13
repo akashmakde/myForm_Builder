@@ -5,6 +5,7 @@ import {myObjInterface} from './myObjRec';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { StudentInfoService } from '../student-info.service';
 
 
 // describes what the return value of the form control will look like
@@ -65,18 +66,9 @@ export class NameEmailAgeComponent implements  ControlValueAccessor,OnChanges,Va
 
 //=======================================================================================
 //=======================TRANSFERING SELECTED ITEM BETWEEN LISTS ===================================================
-list1 = [
-  // { listItem: 'AVENGERS',    selected: false },
-  // { listItem: 'BATMAN',      selected: false },
-  // { listItem: 'SPIDER-MAN',  selected: false },
-  // { listItem: 'WONDER WOMEN',selected: false },
-  // { listItem: 'IRON MAN',    selected: false },
-  // { listItem: 'IRON MAN-2',  selected: false },
-  // { listItem: 'IRON MAN-3',  selected: false },
-];
-list2 = [
-       //empty array
-];
+list1 =this.myService.getList1();
+list2 =this.myService.getList2();
+//empty lists
 
 public toggleSelection(item: { listItem: string; selected: boolean },list: number) {
   item.selected = !item.selected;
@@ -100,6 +92,7 @@ public moveSelected(direction) {
       }
     });
     this.list2 = this.list2.filter((i) => !i.selected);
+    this.myService.saveList2(this.list2);
     //removing selected item class
     this.removeSelected(this.list1);
   } else {
@@ -109,6 +102,8 @@ public moveSelected(direction) {
       }
     });
     this.list1 = this.list1.filter((i) => !i.selected);
+    this.myService.saveList1(this.list1);
+
     //removing selected item class
     this.removeSelected(this.list2);
   }
@@ -118,11 +113,15 @@ public moveAll(direction: string) {
   if (direction === 'left') {
     this.list1 = [...this.list1, ...this.list2];
     this.list2 = [];
+    this.myService.saveList2(this.list2);
+
     //removing selected item
     this.removeSelected(this.list1);
   } else {
     this.list2 = [...this.list2, ...this.list1];
     this.list1 = [];
+    this.myService.saveList1(this.list1);
+
     //removing selected item
     this.removeSelected(this.list2);
   }
@@ -135,12 +134,20 @@ public removeSelected(list) {
     }
   });
 } //removing color of selected items if moved to other list ends
-
+deleteItemInList1(i){
+this.list1.splice(i,1);
+this.myService.saveList1(this.list1);
+}
+deleteItemInList2(i){
+this.list2.splice(i,1);
+this.myService.saveList2(this.list2);
+}
 addItemLeftList(){
   let item = { listItem:null,  selected: false };
   item.listItem =  this.reusableComponentform.get('itemLeft').value;
   if ( item.listItem != null) {
-    this.list1.push(item);           
+    this.list1.push(item);  
+    this.myService.saveList1(this.list1);         
   }
  this.reusableComponentform.controls['itemLeft'].setValue(null);
 }
@@ -148,8 +155,10 @@ addItemRightList(){
   let item = { listItem:"",  selected: false };
   item.listItem =  this.reusableComponentform.get('itemRight').value;
   if ( item.listItem != null) {
-    this.list2.push(item);           
-  }   this.reusableComponentform.controls['itemRight'].setValue(null);
+    this.list2.push(item);
+    this.myService.saveList2(this.list2);           
+  }  
+   this.reusableComponentform.controls['itemRight'].setValue(null);
 }
 //=======================TRANSFERING SELECTED ITEM BETWEEN LISTS ENDS ===================================================
 //=======================================================================================
@@ -333,7 +342,7 @@ multipleCheckbox(event){
 // ===========================get and set methods ends=====================================
 // ==================================================================================================
 
-  constructor(private fb:FormBuilder) {
+  constructor(private fb:FormBuilder,private myService:StudentInfoService) {
     //creating inner blank form and dynmically adding form controls according to requirements
     this.reusableComponentform=this.fb.group({         
            //dynamically adding formcontrolname
@@ -349,26 +358,64 @@ multipleCheckbox(event){
   }//constructor ends
 
 ///////////////////////////////table2////////////////////////
-deleteTable2ColumnOnClick(){
+table(): FormArray {
+  return this.reusableComponentform.get("table") as FormArray
+}
 
-}
-addTableRowFormGroup():FormGroup{
-  return this.fb.group({
-    row:['row']
-  });
-}
-addTable2RowOnClick(){
-  (<FormArray>this.reusableComponentform.get('table2Row')).push(this.addTableRowFormGroup());
-}
-addTableColFormGroup():FormGroup{
-  return this.fb.group({
-    column:['column']
-  });
-}
-addTable2ColumnOnClick():void{
- (<FormArray>this.reusableComponentform.get('table2Col')).push(this.addTableColFormGroup());
- this.addTable2RowOnClick();
 
+newRow(): FormGroup {
+  return this.fb.group({   
+    items:this.fb.array([])
+  })
+}
+
+
+addRow() {
+  this.table().push(this.newRow());
+  let length = (this.table().length)-1;
+  for(let i=0;i<this.rowsItems(0).length;i++){
+    this.rowsItems(length).push(this.newItem());
+  }
+}
+
+
+removeRow(rowIndex:number) {
+  this.table().removeAt(rowIndex);
+}
+
+
+rowsItems(rowIndex:number) : FormArray {
+  return this.table().at(rowIndex).get("items") as FormArray;
+}
+
+newItem(): FormGroup {
+  return this.fb.group({
+    item: '',      
+  })
+}
+
+addRowItem(rowIndex:number) {
+ // this.rowsItems(rowIndex).push(this.newItem());
+  for(let i=0;i<this.table().length;i++){
+    this.rowsItems(i).push(this.newItem());
+  }
+}
+
+// addEmployeeSkillMy() {
+// for(let i=0;i<this.table().length;i++){
+//   this.rowsItems(i).push(this.newItem());
+// }
+// }
+insertRowItem(index) {
+for(let i=0;i<this.table().length;i++){
+  this.rowsItems(i).insert(index+1,this.newItem());
+}
+}
+
+removeRowItem(itemIndex:number) {
+  for(let i=0;i<this.table().length;i++){
+    this.rowsItems(i).removeAt(itemIndex);
+  }
 }
 ///////////////////////////////table2/ ends///////////////////////
 
@@ -494,16 +541,16 @@ addTable2ColumnOnClick():void{
           }
           case "table2":{
             this.table2Flag = true; //setting true  for template   
-         this.reusableComponentform.addControl('table2Col',new FormArray([ ]));   
-         this.reusableComponentform.addControl('table2Row',new FormArray([ ]));  
-         this.addTable2ColumnOnClick();
-         this.addTable2ColumnOnClick();
-         this.addTable2ColumnOnClick();
-        // this.addTable2ColumnOnClick();
+         this.reusableComponentform.addControl('table',new FormArray([]));       
 
-          // for(let i=0;i<this.reusableComponentform.controls['table2Col'].value.length;i++){
-          //     this.addTable2RowOnClick();
-          //   }
+         for(let i=0;i<3;i++){
+          this.table().push(this.newRow());
+        }
+        for(let i=0;i<3;i++){
+          for(let j=0;j<4;j++){
+            this.rowsItems(i).push(this.newItem());
+          }
+        }
             
           break;
           }

@@ -1,59 +1,58 @@
 export interface myObjInterface{ 
-   inputfield: {      
+   inputfield?: {      
       fields: ({
-          label: string;
+          label: string,
           formControlName:string,
           placeholder:string,
-          type:string;
+          type:string,
           validation: {
-            required: boolean;
-            minLength: number;
-            maxLength: number;
-            emailVal:boolean;            
-        };
-        
-          errorMSG: string;
-   })[]}
+            required?: boolean,
+            minLength?: number,
+            maxLength?: number,
+            emailVal?:boolean,            
+        },        
+         // errorMSG: string;
+   })[]};
          //select list
-    selectlist:{
+    selectlist?:{
                   listHeading:string,
                   validation:{ 
                              required:boolean,
                   }
                   errorMSG:string,      
-                  selectlistArray :[
-                                      {id:string, name:string}, 
-                                    ],
-              },
+                  selectlistArray :
+                                      {id:string, name:string}[], 
+                                    
+              };
                                   
                   //checkbox
- checkbox:{        
+ checkbox?:{        
          heading:string,
          validation:{
                     required:boolean
                     }
          errorMSG:string,       
-      },
+      };
       
       //dropdown
-   dropdown:{
+   dropdown?:{
       heading:string,
-      items:[{item:string}],
-      dropDownRoutLinks:[{link:string}],
-    },
+      items:{item:string}[],
+      dropDownRoutLinks:{link:string}[],
+    };
        //CKEditor selected 
-    CKEditor:{
-       },
+    CKEditor?:{
+       };
        //textarea
-     textarea: {
+     textarea?: {
         heading: string;
         validation: {
             required: boolean;
-        };
+        }
         errorMSG: string;
-    }
+    };
   //////// //radio buttons
-       radioButton: {
+       radioButton?: {
         heading: string;
         validation: {
             required: boolean;
@@ -64,36 +63,35 @@ export interface myObjInterface{
         options: string[];
     };
      //multiple checkbox
-     multipleCheckbox: {
+     multipleCheckbox?: {
       heading: string;
       validation: {
           required: boolean;
       };
       errorMSG: string;
       items: string[];
-  }
+  };
   
-  dragAndDropImage: {
-}
+  dragAndDropImage?: {};
         //table///
-   table:{
+   table?:{
         tableHeading:string,
         list:[{}
               // {id:number,firstName:string,middleName:string,lastName:string}
           ],//list is array of objects containing any no of keys which will act as table heading
-      },
-   table2:{
+      };
+   table2?:{
         // tableHeading:string,
         // list:[{}
         //       // {id:number,firstName:string,middleName:string,lastName:string}
         //   ],//list is array of objects containing any no of keys which will act as table heading
-      },
+      };
      
-      custmClasses:{class1:string};
-      card:{
+      custmClasses?:{class1:string};
+      card?:{
         image:string,
         title:string,
-        descriptiom:string,
+        description:string,
       };
       // cardWithSlider:{
       //   title:string,
@@ -112,40 +110,40 @@ export interface myObjInterface{
     //     isActive: string;
     //     dataInterval: number;
     // }[];
-    owlCarouselCards: {
+    owlCarouselCards?: {
       id: number;
       title: string;
       descriptiom: string;
       image: string;
       alt: string;
   }[];
-  owlCarouselImg: {
+  owlCarouselImg?: {
     id: number;
     title: string;
     descriptiom: string;
     image: string;
     alt: string;
 }[];
-autoComplete: {
+autoComplete?: {
   data: {
       id: number;
       name: string;
   }[];
   placeholder: string;
 };
-tranItemsBetList: {
+tranItemsBetList?: {
   todo: string[];
   done: string[];
   toDoHeading: string;
   doneHeading: string;
 };
-transferItemsBetList: {
+transferItemsBetList?: {
   // todo: string[];
   // done: string[];
   // toDoHeading: string;
   // doneHeading: string;
 };
-};
+}
 
   
 

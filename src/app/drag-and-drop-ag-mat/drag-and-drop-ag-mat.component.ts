@@ -1,18 +1,16 @@
-import { myObjInterface } from './../name-email-age/myObjRec';
 import { Component, OnInit } from '@angular/core';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { myObjInterface } from '../name-email-age/myObjRec';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import { StudentInfoService } from '../student-info.service';
 import { Router } from '@angular/router';
-
+import { StudentInfoService } from '../student-info.service';
 
 @Component({
-  selector: 'app-home4',
-  templateUrl: './home4.component.html',
-  styleUrls: ['./home4.component.scss']
+  selector: 'app-drag-and-drop-ag-mat',
+  templateUrl: './drag-and-drop-ag-mat.component.html',
+  styleUrls: ['./drag-and-drop-ag-mat.component.scss']
 })
-export class Home4Component implements OnInit {
- 
+export class DragAndDropAgMatComponent implements OnInit {
   shareCompDemo1: FormGroup;
   fullnameEdit: FormGroup;
   emailEditFB:FormGroup;
@@ -316,14 +314,159 @@ dragItems:{formControl:string, myObj:myObjInterface, type:string}[]
           ];
   currentItem: any;//this object will hold current item to edit(from edit() fumction)
   editEmailFlag: boolean;
-drop(event: CdkDragDrop<string[]>) {
-  moveItemInArray(this.dragItems, event.previousIndex, event.currentIndex);  
-  //console.log(event);
-    
-}
-////////////////DRAG AND DROP WITH  SORTING EFFECT ENDS///////////////////////////////////
+ //we are using angular material drag and drop list transfer and sorting effect
+  //todo is component/items to drag i.e. present on left side navbar
+  todo = [
+    "Fullname",
+    "Address",
+    "Email",
+    "Contact No",
+    "Input",
+    "CheckBox",
+    "SelectList",
+    "RadioButtons",
+    "MultipleCheckbox",  
+    "TextArea",  
+    "Table2",       
+    "DropDown",       
+    "CKEditor",       
+    "ImageDragAndDrop",       
+    "Cards",       
+    "Dual list",       
+    "Auto Complete",       
+    "Carousel Cards",       
+    "Carousel Images",         
 
+  ];
 
+  done = [
+  
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      if(event.previousContainer.id == "cdk-drop-list-1"){//move in array available only for components //not for sidenavbar
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } 
+      
+    } else {
+         if (event.previousContainer.id == "cdk-drop-list-0") {   //transfer items between sidenavbar to components only   
+                        let temp = event.previousContainer.data[event.previousIndex];     
+                        
+                        switch(temp){
+                          case "Fullname":{
+                            this.addComponent("fullname",event.currentIndex);
+                            break;
+                          }
+                          case "Address":{
+                            this.addComponent("address",event.currentIndex);
+                            break;
+                          }
+                          case "Contact No":{
+                            this.addComponent("phoneNo",event.currentIndex);
+                            break;
+                          }
+                          case "Input":{
+                            this.addComponent("input",event.currentIndex);
+                            break;
+                          }
+                          case "Email":{
+                            this.addComponent("email",event.currentIndex);
+                            break;
+                          }
+                          case "CheckBox":{
+                            this.addComponent("checkbox",event.currentIndex);
+                            break;
+                          }
+                          case "SelectList":{
+                            this.addComponent("selectList",event.currentIndex);
+                            break;
+                          }
+                          case "MultipleCheckbox":{
+                            this.addComponent("multiCheckbox",event.currentIndex);
+                            break;
+                          }
+                          case "CheckBox":{
+                            this.addComponent("checkbox",event.currentIndex);
+                            break;
+                          }
+                          case "RadioButtons":{
+                            this.addComponent("radioButton",event.currentIndex);
+                            break;
+                          }
+                          case "TextArea":{
+                            this.addComponent("textArea",event.currentIndex);
+                            break;
+                          }
+                          case "RadioButton":{
+                            this.addComponent("radioButton",event.currentIndex);
+                            break;
+                          }
+                          case "DropDown":{
+                            this.addComponent("dropDown",event.currentIndex);
+                            break;
+                          }
+                          case "Table2":{
+                            this.addComponent("table2",event.currentIndex);
+                            break;
+                          }
+                          case "CKEditor":{
+                            this.addComponent("ckeditor",event.currentIndex);
+                            break;
+                          }
+                          case "Auto Complete":{
+                            this.addComponent("autoComplete",event.currentIndex);
+                            break;
+                          }
+                          case "ImageDragAndDrop":{
+                            this.addComponent("imageDragAndDrop",event.currentIndex);
+                            break;
+                          }
+                          case "Cards":{
+                            this.addComponent("cards",event.currentIndex);
+                            break;
+                          }
+                          case "Dual list":{
+                            this.addComponent("transferItemsBetList",event.currentIndex);
+                            break;
+                          }
+                          case  "Carousel Cards":{
+                            this.addComponent("owlCarouselCards",event.currentIndex);
+                            break;
+                          }
+                          case "Carousel Images":{
+                            this.addComponent("owlCarouselImages",event.currentIndex);
+                            break;
+                          }
+                        
+                        }
+          
+        this. todo = [
+          "Fullname",
+          "Address",
+          "Email",
+          "Contact No",
+          "Input",
+          "CheckBox",
+          "SelectList",
+          "RadioButtons",
+          "MultipleCheckbox",  
+          "TextArea",  
+          "Table2",       
+          "DropDown",       
+          "CKEditor",       
+          "ImageDragAndDrop",       
+          "Cards",       
+          "Dual list",       
+          "Auto Complete",       
+          "Carousel Cards",       
+          "Carousel Images", 
+        ];
+
+     }
+    } 
+  }//drop function ends
+  
  fullnameSel: boolean;
  constructor(private fb:FormBuilder, 
             private myService:StudentInfoService,
@@ -1203,125 +1346,156 @@ for(let i=0;i<this.selectListFB.get('selectListItems').value.length;i++){
  }
 
 
-addComponent(typeComp:string){
+addComponent(typeComp:string,index:number){
 
   this.closeEditSidebars();//closing any edit sidebar 
 
   let newControl:string = null;
-  //this.editFullnameFlag=false; //closing edit sidenav 
   switch (typeComp){
     case "fullname":{
       this.fullnameCount++;
       newControl="fullname"+this.fullnameCount; 
-      this.dragItems.push({formControl:newControl,myObj:this.myObjFullName,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjFullName,type:typeComp});
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjFullName,type:typeComp});
       break;
     }
     case "input":{
       this.inputCount++;
       newControl="input"+this.inputCount; 
-      this.dragItems.push({formControl:newControl,myObj:this.myObjInput,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjInput,type:typeComp});
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjInput,type:typeComp});
       break;
     }
     case "address":{
       this.addressCount++;
       newControl="address"+this.addressCount;
-      this.dragItems.push({formControl:newControl,myObj:this.myObjAdress,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjAdress,type:typeComp});
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjAdress,type:typeComp});
       break;
     }
     case "email":{
       this.emailCount++;
       newControl="email"+this.emailCount;
-      this.dragItems.push({formControl:newControl,myObj:this.myObjEmail,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjEmail,type:typeComp});
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjEmail,type:typeComp});
       break;
     }
     case "phoneNo":{
       this.phoneNoCount++;
       newControl="phoneNo"+this.phoneNoCount;
-      this.dragItems.push({formControl:newControl,myObj:this.myObjPhoneNo,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjPhoneNo,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjPhoneNo,type:typeComp});
       break;
     }
     case "checkbox":{
       this.checkboxCount++;
-      newControl="checkbox"+this.checkboxCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjCheckbox,type:typeComp});
+      newControl="checkbox"+this.checkboxCount; 
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjCheckbox,type:typeComp});
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjCheckbox,type:typeComp});
       break;
     }
     case "multiCheckbox":{
       this.multiCheckboxCount++;
       newControl="multiCheckbox"+this.multiCheckboxCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjMultiCheckbox,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjMultiCheckbox,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjMultiCheckbox,type:typeComp});
       break;
     }
     case "radioButton":{
       this.radioButtonCount++;
-      newControl="radioButton"+this.radioButtonCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjRadioButtons,type:typeComp});
+      newControl="radioButton"+this.radioButtonCount;  
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjRadioButtons,type:typeComp}); 
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjRadioButtons,type:typeComp});
       break;
     }
     case "selectList":{
       this.selectListCount++;
-      newControl="selectList"+this.selectListCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjSelectList,type:typeComp});
+      newControl="selectList"+this.selectListCount;
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjSelectList,type:typeComp});
+   
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjSelectList,type:typeComp});
       break;
     }
     case "textArea":{
       this.textAreaCount++;
-      newControl="textArea"+this.textAreaCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjTextarea,type:typeComp});
+      newControl="textArea"+this.textAreaCount;  
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjTextarea,type:typeComp});
+ 
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjTextarea,type:typeComp});
       break;
     }
     case "table2":{
       this.table2Count++;
-      newControl="table"+this.table2Count;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjTable2,type:typeComp});
+      newControl="table"+this.table2Count;  
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjTable2,type:typeComp});
+ 
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjTable2,type:typeComp});
       break;
     }
     case "imageDragAndDrop":{
       this.dragAndDropImageCount++;
       newControl="dragAndDropImages"+this.dragAndDropImageCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjDragAndDropImage,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjDragAndDropImage,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjDragAndDropImage,type:typeComp});
       break;
     }
     case "cards":{
       this.cardsCount++;
       newControl="cards"+this.cardsCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjCard,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjCard,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjCard,type:typeComp});
       break;
     }
     case "owlCarouselImages":{
       this.owlCarouselImgCount++;
-      newControl="carouselImages"+this.owlCarouselImgCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjOwlCarouselImg,type:typeComp});
+      newControl="carouselImages"+this.owlCarouselImgCount; 
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjOwlCarouselImg,type:typeComp});
+  
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjOwlCarouselImg,type:typeComp});
       break;
     }
     case "owlCarouselCards":{
       this.owlCarouselCardsCount++;
       newControl="owlCarouselCards"+this.owlCarouselCardsCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjOwlCarouselCards,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjOwlCarouselCards,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjOwlCarouselCards,type:typeComp});
       break;
     }
     case "autoComplete":{
       this.autoCompleteCount++;
-      newControl="autoComplete"+this.autoCompleteCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjAutoComplete,type:typeComp});
+      newControl="autoComplete"+this.autoCompleteCount;  
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjAutoComplete,type:typeComp});
+ 
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjAutoComplete,type:typeComp});
       break;
     }
     case "transferItemsBetList":{
       this.myTransferItemsBetListCount++;
-      newControl="transferItemsBetList"+this.myTransferItemsBetListCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjTransferItemsBetList,type:typeComp});
+      newControl="transferItemsBetList"+this.myTransferItemsBetListCount; 
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjTransferItemsBetList,type:typeComp});
+  
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjTransferItemsBetList,type:typeComp});
       break;
     }
     case "ckeditor":{
       this.ckeditorCount++;
       newControl="ckeditor"+this.ckeditorCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjCKEditor,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjCKEditor,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjCKEditor,type:typeComp});
       break;
     }
     case "dropDown":{
       this.dropDownCount++;
       newControl="dropDown"+this.dropDownCount;   
-      this.dragItems.push({formControl:newControl,myObj:this.myObjDropdown,type:typeComp});
+      this.dragItems.splice(index,0,{formControl:newControl,myObj:this.myObjDropdown,type:typeComp});
+
+      // this.dragItems.push({formControl:newControl,myObj:this.myObjDropdown,type:typeComp});
       break;
     }
   }//switch ends
@@ -1349,5 +1523,7 @@ insertingInputF(){
 
 
 }
+
+
 
 }

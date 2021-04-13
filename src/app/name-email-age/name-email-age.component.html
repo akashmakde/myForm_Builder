@@ -7,7 +7,7 @@
     <div *ngFor="let inputData of myObj.inputfield.fields;let i=index">
       <label class="text-dark"  for="exampleInput">{{inputData.label | uppercase}}</label>
       <input [type]="myObj.inputfield.fields[i].type" class="form-control " placeholder="{{inputData.placeholder}}"
-       [id]="inputData.label" [formControlName]="inputData.formControlName" [required]="myObj.inputfield.fields[i].validation.required">
+        [formControlName]="inputData.formControlName" [required]="myObj.inputfield.fields[i].validation.required">
       
        <!--Validation messages required, minlength, maxlength, email  -->  
        <!-- <div *ngIf="myObj.inputfield.fields[i].validation.required==false">{{addValidation(inputData.label,myObj.inputfield.fields[i].validation)}}</div>  -->
@@ -48,7 +48,7 @@
 <!-- =============================SELECT LIST ENDS============================================================================ -->
 
 
-<!-- //////////////////////////CHECKBOX ///////////////////////////////////////////////// -->
+<!-- //============================/CHECKBOX /============================================// -->
 <div *ngIf="checkboxFlag" class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="checkbox" 
     [required]="myObj.checkbox.validation.required">
@@ -59,13 +59,12 @@
       <span class="myWarningRed" *ngIf="myObj.checkbox.validation.required && reusableComponentform.get('checkbox').touched &&
       reusableComponentform.get('checkbox').hasError('required')">{{myObj.checkbox.errorMSG}}</span>
     </div>
- </div>    
-
-<!-- ============================checkbox ended============================================================================== -->
-
+ </div>   
+<!-- ============================CHECKBOX ENDS============================================================================== -->
 
 
-<!-- ////////////////////CK EDITOR///////////////////////////////// -->
+
+<!-- ======================================/CK EDITOR//=======================================================/ -->
 <div  *ngIf="CKEditorFlag">
   <ckeditor class="myEditor" [editor]="Editor" [config]="ckconfig" formControlName="ckeditor" required></ckeditor>
   <span class="text-danger" *ngIf="reusableComponentform.get('ckeditor').touched &&
@@ -105,6 +104,7 @@
 </div> -->
 <!-- ===================================TEXT AREA ENDS========================================== -->
 
+
 <!-- ===========================================RADIO BUTTONS=================================== -->
 <div *ngIf="radioButtonFlag">
   <h3 class="text-primary">Please select your {{myObj.radioButton.name}}</h3>
@@ -119,6 +119,8 @@
     </div>
 </div>
 <!-- ===========================================RADIO BUTTON ENDS=================================== -->
+
+
 
 <!-- ===========================================MULTIPLE CHECKBOXES=================================== -->
  
@@ -137,62 +139,51 @@
  </div>
  </div>
 </div>   
-
-
 <!-- =====================================MULTIPLE CHECKBOXES  ends=================================== -->
+
+
 <!-- ==============================TABLE 2 ENDS========================================== -->
 <div *ngIf="table2Flag">
   <table class="table table-bordered">
-  <thead>
-    <tr>
-      <!-- <th scope="col">RowItems</th> -->
-      <ng-container formArrayName="table2Col">
-      <th scope="col" *ngFor="let item of reusableComponentform.controls.table2Col.controls;let i=index" [formGroupName]="i">
-        <input type="text" formControlName="column"><button (click)="deleteTable2ColumnOnClick()">X</button></th>
-     </ng-container>
-      <th scope="col"><button class="btn btn-danger" (click)="addTable2ColumnOnClick()">AddCol</button> </th>
-      <!-- <th scope="col">Last</th>
-      <th scope="col">Handle</th> -->
-    </tr>
-  </thead>  
-  <tbody>
-    <tr>
-      <!-- <th scope="row">1</th> -->
-      <ng-container formArrayName="table2Row">
-        <td *ngFor="let item of reusableComponentform.controls.table2Row.controls;let i=index" [formGroupName]="i">
-          <input type="text" formControlName="row">
-        </td>
-       </ng-container>
-      <!-- <td>Mark</td>
-      <td>Mark</td>      
-      <td>Otto</td>
-      <td>@mdo</td> -->
-    </tr>
-    <tr> 
-       <td><button class="btn btn-danger" (click)="addTable2RowOnClick()">AddRow</button> </td>
-    </tr>
-    <!-- <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr> 
-   <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr> -->
-  </tbody>
+    <thead>
+     
+    </thead>
+    <tbody formArrayName="table">
+      <tr  *ngFor="let row of table().controls; let rowIndex=index">
+        <ng-container  [formGroupName]="rowIndex">
+          <ng-container formArrayName="items">
+            <ng-container *ngFor="let item of rowsItems(rowIndex).controls; let itemIndex=index">
+              <ng-container [formGroupName]="itemIndex">
+                
+                <td>
+                  <input type="text" formControlName="item"> 
+                
+                  <ng-container *ngIf="rowIndex==0">
+                    <button class="btn btn-danger" (click)="removeRowItem(itemIndex)">X</button>
+                    <button class="btn btn-warning" (click)="insertRowItem(itemIndex)">+</button>
+                  </ng-container> 
+                </td>
+               
+              </ng-container>
+            </ng-container>
+            <button class="btn btn-warning" (click)="removeRow(empIndex)">X</button>
+
+          </ng-container>
+
+        </ng-container>
+        
+      
+      </tr>
+     
+     
+    </tbody>
   </table>
+  <button type="button" class="btn btn-secondary" (click)="addRow()">Add Row</button>
+  <!-- <button type="button" class="btn btn-warning" (click)="addEmployeeSkillMy()">Add Col</button> -->
 </div>
 
-
 <!-- ==============================TABLE 2 ENDS========================================== -->
+
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 <!-- ==============================TRANSER ITEMS BETWEEN LISTS========================================== -->
 <div class="container-itemTransferBetweenList" *ngIf="itemTransferBetweenListFlag">
@@ -200,10 +191,10 @@
     listItem1
     <li 
     class="itemTransferBetweenList-LI"
-      *ngFor="let item of list1" 
+      *ngFor="let item of list1;let i=index" 
       [class.item-selected-itemTransferBetweenList]="item.selected"
       (click)="toggleSelection(item, 1)"      
-      >{{item.listItem}}
+      >{{item.listItem}}  <button type="button" class="btn btn-warning" (click)="deleteItemInList1(i)">X</button>
     </li> 
     <li class="itemTransferBetweenList-LI" >
       <input type="text" placeholder="Add item" formControlName="itemLeft">
@@ -221,9 +212,10 @@
   <ul class="itemTransferBetweenList-UL">
     listItem2
     <li class="itemTransferBetweenList-LI"
-      *ngFor="let item of list2" 
+      *ngFor="let item of list2;let i=index" 
       [class.item-selected-itemTransferBetweenList]="item.selected"
-      (click)="toggleSelection(item, 2)">{{item.listItem}}</li>
+      (click)="toggleSelection(item, 2)"
+      >{{item.listItem}}<button type="button" class="btn btn-warning" (click)="deleteItemInList2(i)">X</button></li>
       <li class="itemTransferBetweenList-LI">
         <input type="text" placeholder="Add item" formControlName="itemRight">
       </li> 

@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders,HttpParams} from '@angular/common/http' ;
+import { myObjInterface } from './name-email-age/myObjRec';
 const baseUrl = 'http://localhost:3000/students';
 @Injectable({
   providedIn: 'root'
 })
 export class StudentInfoService {
- myObj = null;
+ myObj:myObjInterface;
+ list1:{ listItem: string; selected: boolean }[] = [];
+ list2:{ listItem: string; selected: boolean }[] = [];
+
+
   constructor(private httpClient:HttpClient) { }
 
   getAllStudentInfo(){
@@ -34,4 +39,17 @@ export class StudentInfoService {
   getObj(){
     return this.myObj;
   }
+  getList1(){
+    return this.list1;
+  }
+  getList2(){
+    return this.list2;
+  }
+  saveList1(list1){
+    this.list1 = list1;
+    }
+  saveList2(list2){
+    this.list2 = list2;
+  }
+ 
 }
