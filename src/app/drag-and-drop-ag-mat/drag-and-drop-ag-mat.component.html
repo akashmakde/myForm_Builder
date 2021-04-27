@@ -1,13 +1,13 @@
 <div class="mainDiv">
-    <div class="mySidenavbar">
-
+  <!-- this is sidenavbar containing all comp -->
+    <div class="mySidenavbar my-5">
         <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
             class="example-list-1" (cdkDropListDropped)="drop($event)">
             <div class="example-box-1" *ngFor="let item of todo" cdkDrag>{{item}}</div>
         </div>
     </div>
-
-    <div class="inputField" id="inputField">
+<!-- this is sortable, some component -->
+    <div class="inputField my-3" id="inputField">
         <h3><strong>Welcome drag and drop Form builder</strong></h3>
         <form [formGroup]="shareCompDemo1" class="bg-light">
 
@@ -15,13 +15,13 @@
 
                 <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="dragItems" [cdkDropListConnectedTo]="[todoList]"
                     class="example-list" (cdkDropListDropped)="drop($event)">
-                    <div class="example-box" *ngFor="let item of dragItems;let i=index" cdkDrag>
+                    <div class="example-box" style="padding-top: 20px;" *ngFor="let item of dragItems;let i=index" cdkDrag>
                         <div>
-                            <h4 class="text-success">Please enter your {{item.formControl}}</h4>
+                            <!-- <h4 class="text-success">Please enter your {{item.formControl}}</h4> -->
                             <app-name-email-age [myObj]="item.myObj"></app-name-email-age>
-                            <button type="button" class="btn btn-danger"
+                            <button type="button" class="btn btn-danger my-1"
                                 (click)="deleteFormControl(item)">Delete</button>
-                            <button type="button" class="btn btn-warning" (click)="edit(item)">Edit</button>
+                            <button type="button" class="btn btn-warning my-1 mx-2" (click)="edit(item)">Edit</button>
                         </div>
                     </div>
                 </div>
@@ -32,8 +32,9 @@
         </form>
     </div>
 
+    <!-- all Edit component starts -->
 <!-- now we are editing fullname fields -->
-<div *ngIf="editFullnameFlag" class="inputedit">
+<div *ngIf="editFullnameFlag" class="inputedit my-5">
     <ul class="nav flex-column justify-content-end">
       <form [formGroup]="fullnameEdit">
          <h1 class="text-danger">Edit {{fullnameNo}}</h1>
@@ -98,7 +99,7 @@
       <!--================================================================--- --> 
  
          <!-- now we are editing input fields -->
-    <div *ngIf="editInputFlag" class="inputedit">
+    <div *ngIf="editInputFlag" class="inputedit my-5">
      <ul class="nav flex-column justify-content-end">
        <form [formGroup]="inputEdit">
           <h1 class="text-danger">Edit {{inputNo}}</h1>
@@ -144,7 +145,7 @@
       <!--================================================================--- --> 
  
          <!-- now we are TEXT AREA  -->
-    <div *ngIf="editTextareaFlag" class="inputedit">
+    <div *ngIf="editTextareaFlag" class="inputedit my-5">
      <ul class="nav flex-column justify-content-end">
        <form [formGroup]="textareaFB">
           <h1 class="text-danger">Edit {{textAreaNo}}</h1>
@@ -186,7 +187,7 @@
        <!-- --=============================================================-->
  
      <!-- now we are editing address fields -->
-     <div *ngIf="editAddressFlag" class="inputedit">
+     <div *ngIf="editAddressFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="addressEdit">
             <h1 class="text-danger">Edit {{addressNo}}</h1>
@@ -261,7 +262,7 @@
        <!-- ===================================================================-- -->
  
      <!--  editing email fields starts -->
-     <div *ngIf="editEmailFlag" class="inputedit">
+     <div *ngIf="editEmailFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="emailEditFB">
             <h1 class="text-danger">Edit {{emailNo}}</h1>
@@ -303,7 +304,7 @@
       <!-- ================================================================ --> 
  
      <!--  editing phone no starts -->
-     <div *ngIf="editPhoneNoFlag" class="inputedit">
+     <div *ngIf="editPhoneNoFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="phoneNoEditFB">
             <h1 class="text-danger">Edit {{phoneNoNo}}</h1>
@@ -337,7 +338,7 @@
       <!-- -================================================================- -->   
  
      <!--  editing checkbox no starts -->
-     <div *ngIf="editCheckboxFlag" class="inputedit">
+     <div *ngIf="editCheckboxFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="checkboxFB">
             <h1 class="text-danger">Edit {{checkboxNo}}</h1>
@@ -372,7 +373,7 @@
     <!-- -==========================================================----- -->
  
      <!--  editing radiobuttons  -->
-     <div *ngIf="editRadioButtonsFlag" class="inputedit">
+     <div *ngIf="editRadioButtonsFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="radioButtonsFB">
             <h1 class="text-danger">Edit {{radioButtonNo}}</h1>
@@ -422,7 +423,7 @@
      <!-- --===============================================================- -->
  
      <!--  editing multi checkboxes starts -->
-    <div *ngIf="editMultiCheckboxFlag" class="inputedit">
+    <div *ngIf="editMultiCheckboxFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="multiCheckboxFB">
             <h1 class="text-danger">Edit {{multiCheckboxNo}}</h1>
@@ -468,7 +469,7 @@
      
      <!-- --===============================================================- -->
      <!--  editing SELECT LIST starts -->
-    <div *ngIf="editSelectListFlag" class="inputedit">
+    <div *ngIf="editSelectListFlag" class="inputedit my-5">
        <ul class="nav flex-column justify-content-end">
          <form [formGroup]="selectListFB">
             <h1 class="text-danger">Edit {{selectListNo}}</h1>
@@ -514,7 +515,7 @@
      
      <!-- --===============================================================- -->
     <!--  =================IMAGE CAROUSEL(OWL)====================================-->
-    <div *ngIf="editOwlImageCarouselFlag" class="inputedit">
+    <div *ngIf="editOwlImageCarouselFlag" class="inputedit my-5">
      <ul class="nav flex-column justify-content-end">
        <form [formGroup]="owlImageCarouselFB">
           <h1 class="text-danger">Edit {{imageCarouselNo}}</h1>  

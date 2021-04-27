@@ -36,22 +36,27 @@ export class Home4Component implements OnInit {
 
 
 //////////defining object of fullname "myObjFullName" /////////////////////////////
- myObjFullName={
-   inputfield:   
-   {fields:[
-            {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-   ]}
- }
+myObjFullName={
+  inputfield:   
+  {
+    label: "Enter your Fullname:",
+    fields:[
+           {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
+           {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your lastname",validation:{required:true,maxLength:null,minLength:null}},
+          ]
+  }
+}
  fullnameCount=1;// this count implies number of fullname
  fullnameNo:string=null;
 //////////defining object of input "myObjInput" /////////////////////////////
 myObjInput={
-   inputfield:   
-   {fields:[
-            {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
-   ]}
- }
+  inputfield:      
+  {
+   label: "Enter your :",
+    fields:[
+           {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
+  ]}
+}
  inputCount=1;// this count implies number of fullname
  inputNo:string=null;
  inputEdit:FormGroup;
@@ -59,17 +64,19 @@ myObjInput={
 
 //////////defining object of address "myObjAdress" /////////////////////////////
 
- myObjAdress={
-   inputfield:   
-   {fields:[
-            {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
-            {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"city",formControlName:"city" , type:"text", placeholder:"please enter your city",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"state", formControlName:"state" ,type:"text", placeholder:"please enter your state",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"zip_Code",formControlName:"zipCode" , type:"number", placeholder:"please enter your zip code",validation:{required:true,maxLength:null,minLength:null}},
-   ]}
- }
+myObjAdress={
+  inputfield:   
+  {
+   label: "Enter your Address:",
+    fields:[
+           {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
+           {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
+           {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
+           {label:"city",formControlName:"city" , type:"text", placeholder:"please enter your city",validation:{required:true,maxLength:null,minLength:null}},
+           {label:"state", formControlName:"state" ,type:"text", placeholder:"please enter your state",validation:{required:true,maxLength:null,minLength:null}},
+           {label:"zip_Code",formControlName:"zipCode" , type:"number", placeholder:"please enter your zip code",validation:{required:true,maxLength:null,minLength:null}},
+  ]}
+}
 
  editAddressFlag: boolean= false;
 
@@ -80,7 +87,9 @@ myObjInput={
 //////////defining object of email "myObjEmail" ////////////////////////////////
 myObjEmail={
   inputfield:   
-  {fields:[
+  {
+    label: "Enter your Email:",
+    fields:[
            { 
              label:"Email",
              formControlName:"email",
@@ -95,7 +104,9 @@ emailNo:string=null;
 //////////defining object of phone no "myObjPhoneNo" ////////////////////////////////
 myObjPhoneNo={
   inputfield:   
-  {fields:[
+  {    
+   label: "Enter your Phone No:",
+  fields:[
            {label:"Phone no",
             formControlName:"number",
             type:"number",
@@ -601,13 +612,15 @@ this.currentItem=item;//assigning  item that we received to currentItem ,this wi
   let index = this.dragItems.indexOf(this.currentItem);  
  
   //creating dummy or temporary object to assign
- let  myObjFullNameDummy={
-  inputfield:   
-  {fields:[
-           {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-           {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-  ]}
-}
+  let  myObjFullNameDummy={
+    inputfield:   
+    {
+      label: "Enter your Fullname:",
+      fields:[
+             {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
+             {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
+    ]}
+  }
  
  
   myObjFullNameDummy.inputfield.fields[0].label=this.fullnameEdit.get('firstname').value;
@@ -660,12 +673,14 @@ editingInput(item){
   let index = this.dragItems.indexOf(this.currentItem);  
  
   //creating dummy or temporary object to assign
- let  myObjInputTemp={
-  inputfield:   
-  {fields:[
-           {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
-  ]}
-}
+  let  myObjInputTemp={
+    inputfield:   
+    {
+      label: "Enter your Input:",
+      fields:[
+             {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
+    ]}
+  }
  
  
   myObjInputTemp.inputfield.fields[0].label=this.inputEdit.get('label').value;
@@ -722,17 +737,19 @@ editingInput(item){
   let index = this.dragItems.indexOf(this.currentItem);
 
    //defining temporary address objrct for data transfering ,modification etc
-let  myObjAdressTemp={
-  inputfield:   
-  {fields:[
-           {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
-           {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
-           {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
-           {label:"city",formControlName:"city" , type:"text", placeholder:"please enter your city",validation:{required:true,maxLength:null,minLength:null}},
-           {label:"state", formControlName:"state" ,type:"text", placeholder:"please enter your state",validation:{required:true,maxLength:null,minLength:null}},
-           {label:"zip_Code",formControlName:"zipCode" , type:"number", placeholder:"please enter your zip code",validation:{required:true,maxLength:null,minLength:null}},
-  ]}
-}
+   let  myObjAdressTemp={
+    inputfield:   
+    {
+      label: "Enter your Address:",
+      fields:[
+             {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
+             {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
+             {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
+             {label:"city",formControlName:"city" , type:"text", placeholder:"please enter your city",validation:{required:true,maxLength:null,minLength:null}},
+             {label:"state", formControlName:"state" ,type:"text", placeholder:"please enter your state",validation:{required:true,maxLength:null,minLength:null}},
+             {label:"zip_Code",formControlName:"zipCode" , type:"number", placeholder:"please enter your zip code",validation:{required:true,maxLength:null,minLength:null}},
+    ]}
+  }
   //if user wants address fields to are required then setting it to true else false
   if(this.addressEdit.get('addressRequired').value == true){
    for(let i=0;i<myObjAdressTemp.inputfield.fields.length;i++){
@@ -786,9 +803,11 @@ setEmail(){
   let index = this.dragItems.indexOf(this.currentItem);  
  
   //creating dummy or temporary object to assign
- let myObjEmailTemp={
+  let myObjEmailTemp={
     inputfield:   
-    {fields:[
+    {    
+       label: "Enter your Email:",
+    fields:[
              {label:"Email",formControlName:"email",type:"email", placeholder:"please enter your email",  validation:{required:true,emailVal:true}},
     ]}
   }
@@ -835,9 +854,11 @@ setPhoneNo(){
   let index = this.dragItems.indexOf(this.currentItem);  
  
   //creating dummy or temporary object to assign
- let  myObjPhoneNoTemp={
+  let  myObjPhoneNoTemp={
     inputfield:   
-    {fields:[
+    {   
+        label: "Enter your Phone No:",
+    fields:[
              {label:"Phone no",formControlName:"number",type:"number",placeholder:"please enter your phone no", validation:{required:true,maxLength:null,minLength:null}},
     ]}
   }

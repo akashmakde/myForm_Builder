@@ -36,17 +36,22 @@ export class DragAndDropAgMatComponent implements OnInit {
 //////////defining object of fullname "myObjFullName" /////////////////////////////
  myObjFullName={
    inputfield:   
-   {fields:[
+   {
+     label: "Enter your Fullname:",
+     fields:[
             {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-            {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
-   ]}
+            {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your lastname",validation:{required:true,maxLength:null,minLength:null}},
+           ]
+   }
  }
  fullnameCount=1;// this count implies number of fullname
  fullnameNo:string=null;
 //////////defining object of input "myObjInput" /////////////////////////////
 myObjInput={
-   inputfield:   
-   {fields:[
+   inputfield:      
+   {
+    label: "Enter your :",
+     fields:[
             {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
    ]}
  }
@@ -59,7 +64,9 @@ myObjInput={
 
  myObjAdress={
    inputfield:   
-   {fields:[
+   {
+    label: "Enter your Address:",
+     fields:[
             {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
             {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
             {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
@@ -78,7 +85,9 @@ myObjInput={
 //////////defining object of email "myObjEmail" ////////////////////////////////
 myObjEmail={
   inputfield:   
-  {fields:[
+  {
+    label: "Enter your Email:",
+    fields:[
            { 
              label:"Email",
              formControlName:"email",
@@ -93,7 +102,9 @@ emailNo:string=null;
 //////////defining object of phone no "myObjPhoneNo" ////////////////////////////////
 myObjPhoneNo={
   inputfield:   
-  {fields:[
+  {    
+   label: "Enter your Phone No:",
+  fields:[
            {label:"Phone no",
             formControlName:"number",
             type:"number",
@@ -343,14 +354,16 @@ dragItems:{formControl:string, myObj:myObjInterface, type:string}[]
   
   ];
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      if(event.previousContainer.id == "cdk-drop-list-1"){//move in array available only for components //not for sidenavbar
-        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  drop(event) {
+      if (event.previousContainer === event.container) {
+     // if(event.previousContainer.id == "cdk-drop-list-1"){//move in array available only for components //not for sidenavbar
+      if(event.previousContainer.data == this.dragItems){//move in array available only for components //not for sidenavbar
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);                
       } 
       
     } else {
-         if (event.previousContainer.id == "cdk-drop-list-0") {   //transfer items between sidenavbar to components only   
+         //if (event.previousContainer.id == "cdk-drop-list-0") {   //transfer items between sidenavbar to components only   
+         if (event.previousContainer.data == this.todo) {   //transfer items between sidenavbar to components only   
                         let temp = event.previousContainer.data[event.previousIndex];     
                         
                         switch(temp){
@@ -726,7 +739,7 @@ this.currentItem=item;//assigning  item that we received to currentItem ,this wi
 //console.log(item.myObj.inputfield.fields[0].label);
 
  ///setting values
-  this.fullnameEdit.setValue({
+  this.fullnameEdit.patchValue({
    firstnameRequired : item.myObj.inputfield.fields[0].validation.required,
    firstname :         item.myObj.inputfield.fields[0].label,
    lastnameRequired :  item.myObj.inputfield.fields[1].validation.required,   
@@ -746,7 +759,9 @@ this.currentItem=item;//assigning  item that we received to currentItem ,this wi
   //creating dummy or temporary object to assign
  let  myObjFullNameDummy={
   inputfield:   
-  {fields:[
+  {
+    label: "Enter your Fullname:",
+    fields:[
            {label:"firstname",formControlName:"firstname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
            {label:"lastname",formControlName:"lastname",type:"text",placeholder:"please enter your firstname",validation:{required:true,maxLength:null,minLength:null}},
   ]}
@@ -789,7 +804,7 @@ editingInput(item){
 //console.log(item.myObj.inputfield.fields[0].label);
 
  ///setting values
-  this.inputEdit.setValue({
+  this.inputEdit.patchValue({
    required   : item.myObj.inputfield.fields[0].validation.required,
    label      : item.myObj.inputfield.fields[0].label,
    type       : item.myObj.inputfield.fields[0].type,
@@ -805,7 +820,9 @@ editingInput(item){
   //creating dummy or temporary object to assign
  let  myObjInputTemp={
   inputfield:   
-  {fields:[
+  {
+    label: "Enter your Input:",
+    fields:[
            {label:"Abcd",formControlName:"input",type:"text",placeholder:"enter here",validation:{required:true,maxLength:null,minLength:null}},
   ]}
 }
@@ -818,16 +835,10 @@ editingInput(item){
   myObjInputTemp.inputfield.fields[0].validation.minLength=this.inputEdit.get('minlength').value;
   myObjInputTemp.inputfield.fields[0].validation.maxLength=this.inputEdit.get('maxlength').value;
 
-  
 
-  // console.log(this.dragItems[index].myObj,"before setting");  
-  // this.dragItems[index].myObj = this.myObjInputTemp;
 
   this.dragItems[index].myObj = myObjInputTemp;
-  // console.log(this.myObjFullNameDummy);
-
-  // console.log(this.dragItems[index].myObj,"after setting");  
-  // consolse.log(this.dragItems[index].myObj);
+ 
   
   this.editInputFlag=false; 
 
@@ -842,7 +853,7 @@ editingInput(item){
     this.addressNo = item.formControl;// to know which address you are editing,
                                       //  this will be displayed on edit sidebar
 
-    this.addressEdit.setValue({
+    this.addressEdit.patchValue({
       addressRequired:true,
       houseNo : item.myObj.inputfield.fields[0].label,
       address : item.myObj.inputfield.fields[1].label,
@@ -867,7 +878,9 @@ editingInput(item){
    //defining temporary address objrct for data transfering ,modification etc
 let  myObjAdressTemp={
   inputfield:   
-  {fields:[
+  {
+    label: "Enter your Address:",
+    fields:[
            {label:"House_No",formControlName:"houseno", type:"number",  placeholder:"please enter your house no", validation:{required:true,maxLength:null,minLength:null}},
            {label:"address",formControlName:"address" , type:"text", placeholder:"please enter your address",validation:{required:true,maxLength:null,minLength:null}},
            {label:"area",formControlName:"area",  type:"text", placeholder:"please enter your area",validation:{required:true,maxLength:null,minLength:null}},
@@ -931,7 +944,9 @@ setEmail(){
   //creating dummy or temporary object to assign
  let myObjEmailTemp={
     inputfield:   
-    {fields:[
+    {    
+       label: "Enter your Email:",
+    fields:[
              {label:"Email",formControlName:"email",type:"email", placeholder:"please enter your email",  validation:{required:true,emailVal:true}},
     ]}
   }
@@ -980,7 +995,9 @@ setPhoneNo(){
   //creating dummy or temporary object to assign
  let  myObjPhoneNoTemp={
     inputfield:   
-    {fields:[
+    {   
+        label: "Enter your Phone No:",
+    fields:[
              {label:"Phone no",formControlName:"number",type:"number",placeholder:"please enter your phone no", validation:{required:true,maxLength:null,minLength:null}},
     ]}
   }

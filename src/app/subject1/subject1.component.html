@@ -1,0 +1,10 @@
+<form [formGroup]="subject">
+  
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Enter your id</label>
+      <input type="number" class="form-control" id="exampleInputPassword1" formControlName="name">
+    </div>
+    <h3>Your checksum is:{{checksum}}</h3>
+  
+    <button type="submit" class="btn btn-primary" (click)="onClick()">Submit</button>
+  </form>

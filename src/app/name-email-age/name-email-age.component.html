@@ -4,6 +4,8 @@
 <div [formGroup]="reusableComponentform">
   <div *ngIf="inputFieldFlag">
     <div [class]="applyMyCustmClasses">
+      <label class="text-dark" style="font-size: large;" for="exampleInput">{{myObj.inputfield.label| uppercase}}</label>
+
     <div *ngFor="let inputData of myObj.inputfield.fields;let i=index">
       <label class="text-dark"  for="exampleInput">{{inputData.label | uppercase}}</label>
       <input [type]="myObj.inputfield.fields[i].type" class="form-control " placeholder="{{inputData.placeholder}}"
@@ -130,7 +132,7 @@
   <div *ngFor="let checkboxItem of myObj.multipleCheckbox.items;let i=index">
     <input type="checkbox" class="form-check-input" formControlname="{{i}}" value="{{checkboxItem}}"
      (change)="multipleCheckbox($event)" >    
-    <label class="form-check-label text-primary" for="{{checkboxItem}}">{{checkboxItem|uppercase}}</label>
+    <label class="form-check-label" for="{{checkboxItem}}">{{checkboxItem|uppercase}}</label>
   </div>
   <div class="myWarningRed">
     <span *ngIf="(selectMultipleCheckboxes.length<1) && selectMultipleCheckboxesTouch && myObj.multipleCheckbox.validation.required">

@@ -33,9 +33,10 @@ import { NestedFormArrayExComponent } from './nested-form-array-ex/nested-form-a
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
 import { TransferItemsBetListComponent } from './transfer-items-bet-list/transfer-items-bet-list.component';
 import { DragAndDropAgMatComponent } from './drag-and-drop-ag-mat/drag-and-drop-ag-mat.component';
+import { Subject1Component } from './subject1/subject1.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'home4',pathMatch:'full'},  
+  {path:'',redirectTo:'dragAndDropAgMaterial',pathMatch:'full'},  
   {path:'home',component:HomeComponent},
   {path:'student',component:StudentComponent,
     children:[
@@ -74,6 +75,7 @@ const routes: Routes = [
   {path:'dynamicTable',component:DynamicTableComponent},
   {path:'transferItemsBetList',component:TransferItemsBetListComponent},
   {path:'dragAndDropAgMaterial',component:DragAndDropAgMatComponent},
+  {path:'subject1',component:Subject1Component},
   {path:'**',component:PagenotfoundComponent}  
 
     

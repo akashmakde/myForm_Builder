@@ -10,6 +10,7 @@ export class StudentInfoService {
  list1:{ listItem: string; selected: boolean }[] = [];
  list2:{ listItem: string; selected: boolean }[] = [];
 
+globalData:string='akash';
 
   constructor(private httpClient:HttpClient) { }
 
@@ -36,20 +37,34 @@ export class StudentInfoService {
   saveObj(myObj){
     this.myObj = myObj;
   }
+
   getObj(){
     return this.myObj;
   }
+
   getList1(){
     return this.list1;
   }
+
   getList2(){
     return this.list2;
   }
+
   saveList1(list1){
     this.list1 = list1;
-    }
+  }
+
   saveList2(list2){
     this.list2 = list2;
   }
  
+  getGlobalData(){
+    return this.globalData;
+  }
+  
+  setGlobalData(data){
+    this.globalData = data;
+  }
+
+
 }

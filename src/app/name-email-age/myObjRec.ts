@@ -1,5 +1,6 @@
 export interface myObjInterface{ 
-   inputfield?: {      
+   inputfield?: { 
+     label:string;    
       fields: ({
           label: string,
           formControlName:string,

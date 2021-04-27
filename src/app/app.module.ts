@@ -47,6 +47,8 @@ import { NestedFormArrayExComponent } from './nested-form-array-ex/nested-form-a
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
 import { TransferItemsBetListComponent } from './transfer-items-bet-list/transfer-items-bet-list.component';
 import { DragAndDropAgMatComponent } from './drag-and-drop-ag-mat/drag-and-drop-ag-mat.component';
+import { Subject1Component } from './subject1/subject1.component';
+import { Subject2Component } from './subject2/subject2.component';
 
 
 
@@ -85,7 +87,9 @@ import { DragAndDropAgMatComponent } from './drag-and-drop-ag-mat/drag-and-drop-
     NestedFormArrayExComponent,
     DynamicTableComponent,
     TransferItemsBetListComponent,
-    DragAndDropAgMatComponent
+    DragAndDropAgMatComponent,
+    Subject1Component,
+    Subject2Component
   ],
   imports: [
     BrowserModule,
